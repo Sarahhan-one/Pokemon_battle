@@ -16,6 +16,9 @@ public:
 	void setName(string name) { name_ = name; }
 	void selectUnit(Unit unit) { unit_ = unit; }
 
+	Unit& getUnit() { return unit_; }
+	const Unit& getUnit() const { return unit_; }
+
 	virtual void selectCardsForStage() = 0;
 	virtual void executeCurrentCard() = 0;
 };

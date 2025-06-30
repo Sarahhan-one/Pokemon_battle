@@ -25,5 +25,8 @@ public:
 	void setIsBattleEnd(bool isBattleEnd);
 	
 	void printMap() { battleMap_.printMap(); }
+
+	void setHumanUnit(const Unit& unit) { humanPlayer_.selectUnit(unit); }
+	void setComputerUnit(const Unit& unit) { computerPlayer_.selectUnit(unit); }
 };
 

@@ -7,7 +7,9 @@ BattleMap::BattleMap(Position pos) : pos_(pos),
 
 bool BattleMap::isWalkable(Position pos)
 {
-    return false;
+    if (pos.y < 0 || pos.y >= grid_.size() || pos.x < 0 || pos.x >= grid_[0].size())
+        return false;
+    return grid_[pos.y][pos.x] == 0; // 0 means empty
 }
 
 void BattleMap::printMap()
