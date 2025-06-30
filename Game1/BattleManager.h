@@ -26,7 +26,7 @@ public:
 	
 	void printMap() { battleMap_.printMap(); }
 
-	void setHumanUnit(const Unit& unit) { humanPlayer_.selectUnit(unit); }
-	void setComputerUnit(const Unit& unit) { computerPlayer_.selectUnit(unit); }
+	void setHumanUnit(const Pokemon& unit) { humanPlayer_.selectUnit(unit); }
+	void setComputerUnit(const Pokemon& unit) { computerPlayer_.selectUnit(unit); }
 };
 
