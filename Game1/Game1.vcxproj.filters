@@ -13,13 +13,28 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Pokemon">
+      <UniqueIdentifier>{874b7b58-b5be-4274-a432-832e4c3a807a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Pokemon\Kkobugi.cpp">
+      <Filter>Pokemon</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Pokemon\Majayong.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon\Naong.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon\Pairi.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon\Pikachu.cpp">
+      <Filter>Pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="Pokemon\Ttodogas.cpp">
+      <Filter>Pokemon</Filter>
     </ClCompile>
     <ClCompile Include="BattleManager.cpp">
       <Filter>소스 파일</Filter>
@@ -27,40 +42,46 @@
     <ClCompile Include="BattleMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="HumanPlayer.cpp">
+    <ClCompile Include="Card.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ComputerPlayer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Unit.cpp">
+    <ClCompile Include="GameManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ProtossUnit.cpp">
+    <ClCompile Include="HumanPlayer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="TerranUnit.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ZergUnit.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Zealot.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Marine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Zergling.cpp">
+    <ClCompile Include="Pokemon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameManager.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Pokemon\Kkobugi.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon\Majayong.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon\Naong.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon\Pairi.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon\Pikachu.h">
+      <Filter>Pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="Pokemon\Ttodogas.h">
+      <Filter>Pokemon</Filter>
     </ClInclude>
     <ClInclude Include="BattleManager.h">
       <Filter>헤더 파일</Filter>
@@ -68,37 +89,25 @@
     <ClInclude Include="BattleMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Tools.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="HumanPlayer.h">
+    <ClInclude Include="Card.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ComputerPlayer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Unit.h">
+    <ClInclude Include="GameManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ProtossUnit.h">
+    <ClInclude Include="HumanPlayer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="TerranUnit.h">
+    <ClInclude Include="Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ZergUnit.h">
+    <ClInclude Include="Pokemon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Zealot.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Marine.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Zergling.h">
+    <ClInclude Include="Tools.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

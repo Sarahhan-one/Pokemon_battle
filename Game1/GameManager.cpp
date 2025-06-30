@@ -88,15 +88,17 @@ void GameManager::selectCharacter()
     void(*skills[4])(void) = { skill1, skill2, skill3, skill4 };
 
 
-    Unit pokemon; 
+    Pokemon pokemon; 
     if (choice == 1) {
-        pokemon = Unit(Race::NONE, 100, 100, 20, 20, 0, Position(0, 5), skills);
+        Pokemon pokemon;
+        pokemon.setPos(Position(0, 5));
     }
     
     // assign to the player
     battleManager_.setHumanUnit(pokemon);
 
     // assign a random unit to the opponent
-    Unit opponent(Race::NONE, 100, 100, 20, 20, 0, Position(9, 5), skills);
+    Pokemon opponent;
+    opponent.setPos(Position(9, 5));
     battleManager_.setComputerUnit(opponent);
 }

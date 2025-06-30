@@ -18,6 +18,40 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BattleManager.cpp" />
+    <ClCompile Include="BattleMap.cpp" />
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="ComputerPlayer.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HumanPlayer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Pokemon.cpp" />
+    <ClCompile Include="Pokemon\Kkobugi.cpp" />
+    <ClCompile Include="Pokemon\Majayong.cpp" />
+    <ClCompile Include="Pokemon\Naong.cpp" />
+    <ClCompile Include="Pokemon\Pairi.cpp" />
+    <ClCompile Include="Pokemon\Pikachu.cpp" />
+    <ClCompile Include="Pokemon\Ttodogas.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BattleManager.h" />
+    <ClInclude Include="BattleMap.h" />
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="ComputerPlayer.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="HumanPlayer.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Pokemon.h" />
+    <ClInclude Include="Pokemon\Kkobugi.h" />
+    <ClInclude Include="Pokemon\Majayong.h" />
+    <ClInclude Include="Pokemon\Naong.h" />
+    <ClInclude Include="Pokemon\Pairi.h" />
+    <ClInclude Include="Pokemon\Pikachu.h" />
+    <ClInclude Include="Pokemon\Ttodogas.h" />
+    <ClInclude Include="Tools.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -122,38 +156,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="ComputerPlayer.cpp" />
-    <ClCompile Include="BattleManager.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="HumanPlayer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="BattleMap.cpp" />
-    <ClCompile Include="Marine.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ProtossUnit.cpp" />
-    <ClCompile Include="TerranUnit.cpp" />
-    <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="Zealot.cpp" />
-    <ClCompile Include="Zergling.cpp" />
-    <ClCompile Include="ZergUnit.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ComputerPlayer.h" />
-    <ClInclude Include="BattleManager.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="HumanPlayer.h" />
-    <ClInclude Include="BattleMap.h" />
-    <ClInclude Include="Marine.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ProtossUnit.h" />
-    <ClInclude Include="TerranUnit.h" />
-    <ClInclude Include="Tools.h" />
-    <ClInclude Include="Unit.h" />
-    <ClInclude Include="Zealot.h" />
-    <ClInclude Include="Zergling.h" />
-    <ClInclude Include="ZergUnit.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
