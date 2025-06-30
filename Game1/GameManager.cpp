@@ -3,6 +3,9 @@
 
 void GameManager::init()
 {
+    gameState_ = GameState::MENU; 
+    stageNumber_ = 1; 
+    battleManager_.init();
 }
 
 void GameManager::menu()
@@ -13,7 +16,7 @@ void GameManager::menu()
     std::cout << "번호를 선택하세요: ";
 
     int input = 0;
-    cin >> input;
+    std::cin >> input;
 
     switch (input) {
     case 1:
@@ -33,6 +36,7 @@ void GameManager::menu()
 
 void GameManager::startBattle()
 {
+    battleManager_.init();
 }
 
 void GameManager::update()
@@ -45,6 +49,12 @@ void GameManager::update()
 
     case GameState::BATTLE:
         battleManager_.printMap();
+        //battle loop logic
+        battleManager_.selectCardsForStage();
+        battleManager_.executeCurrentCard();
+        if (battleManager_.getIsBattleEnd()) {
+            endBattle();
+        }
         (void)_getch();
         system("cls");
         break;
@@ -58,8 +68,35 @@ void GameManager::update()
 
 void GameManager::endBattle()
 {
+    std::cout << "전투가 종료되었습니다.\n";
 }
+
+void skill1() {}
+void skill2() {}
+void skill3() {}
+void skill4() {}
 
 void GameManager::selectCharacter()
 {
+    std::cout << "캐릭터를 선택하세요.\n";
+    std::cout << "1. Pikachu \n";
+
+    int choice; 
+    std::cin >> choice; 
+
+
+    void(*skills[4])(void) = { skill1, skill2, skill3, skill4 };
+
+
+    Unit pokemon; 
+    if (choice == 1) {
+        pokemon = Unit(Race::NONE, 100, 100, 20, 20, 0, Position(0, 5), skills);
+    }
+    
+    // assign to the player
+    battleManager_.setHumanUnit(pokemon);
+
+    // assign a random unit to the opponent
+    Unit opponent(Race::NONE, 100, 100, 20, 20, 0, Position(9, 5), skills);
+    battleManager_.setComputerUnit(opponent);
 }

@@ -37,6 +37,7 @@ public:
 	int getDamage() { return damage_; }
 	void setDamage(int damage) { damage_ = damage; }
 	Position getPos() { return pos_; }
+	void setPos(Position pos) { pos_ = pos; }
 
 	void move(Position pos);
 	virtual void takeDamage();
