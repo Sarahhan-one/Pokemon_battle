@@ -32,7 +32,7 @@ public:
 	void setPos(const Position pos) { pos_ = pos; }
 
 	bool isAlive() const;
-	virtual void takeAttack(const int damage);
+	virtual void takeDamage(const int damage);
 	vector<Position>& excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
 };
 
