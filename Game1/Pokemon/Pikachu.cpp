@@ -2,6 +2,6 @@
 
 vector<Position>& Pikachu::thunderbolt(vector<vector<Pokemon*>>& map)
 {
-	vector<Position> tmp;
+	vector<Position> tmp = { pos_ };
 	return tmp;
 }
