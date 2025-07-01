@@ -2,8 +2,8 @@
 
 void BattleManager::init()
 {
-	battleMap_.setTile(humanPlayer_.getUnit().getPos(), 1); // 1 = character
-	battleMap_.setTile(computerPlayer_.getUnit().getPos(), 2); // 2 = opponent
+	//battleMap_.setTile(humanPlayer_.getUnit().getPos(), 1); // 1 = character
+	//battleMap_.setTile(computerPlayer_.getUnit().getPos(), 2); // 2 = opponent
 	isBattleEnd_ = false; 
 	currentTurn_ = 0;
 }
@@ -23,15 +23,12 @@ void BattleManager::executeCurrentCard()
 		
 		if (action == 1) {
 			int x, y;
-			std::cout << "new location (x, y): ";
-			std::cin >> x >> y; 
+			std::cout << "new location (y, x): ";
+			std::cin >> y >> x; 
 			Position newPos(x, y);
-			if (battleMap_.isWalkable(newPos)) {
-				battleMap_.setTile(humanPlayer_.getUnit().getPos(), 0);
-				humanPlayer_.getUnit().setPos(newPos);
-				battleMap_.setTile(newPos, 1);
-				
-				
+			if (map_[y][x] == nullptr) {
+				humanPlayer_.getPokemon().setPos(newPos);
+				map_[y][x] = &humanPlayer_.getPokemon();
 			}
 		}
 		if (action == 2) { //need to add battle logic
@@ -51,4 +48,20 @@ bool BattleManager::getIsBattleEnd()
 void BattleManager::setIsBattleEnd(bool isBattleEnd)
 {
 	isBattleEnd_ = isBattleEnd;
+}
+
+void BattleManager::printMap()
+{
+	for (int i = 0; i < map_[0].size(); i++) {
+		for (Pokemon* cur : map_[i]) {
+			if (cur == nullptr) {
+				cout << 0;
+			}
+			else { // 포켓몬에 따라서 다르게 해야할 듯? 또는 포켓몬 넘버 부여
+				cout << 1;
+			}
+			cout << ' ';
+		}
+		cout << '\n';
+	}
 }

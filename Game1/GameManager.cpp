@@ -88,7 +88,7 @@ void GameManager::selectCharacter()
     void(*skills[4])(void) = { skill1, skill2, skill3, skill4 };
 
 
-    Pokemon pokemon; 
+    Pokemon pokemon;
     if (choice == 1) {
         Pokemon pokemon;
         pokemon.setPos(Position(0, 5));

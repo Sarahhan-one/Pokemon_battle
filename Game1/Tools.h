@@ -12,12 +12,8 @@
 using namespace std;
 
 struct Position {
-	int x, y;
+	int y, x;
 
-	Position() : x(0), y(0) {}
-	Position(int x, int y) : x(x), y(y) {}
-};
-
-enum class Action {
-	STAY, ATTACK, SKILL1, SKILL2, SKILL3, SKILL4
+	Position() : y(0), x(0) {}
+	Position(int y, int x) : y(y), x(x) {}
 };

@@ -39,9 +39,6 @@
     <ClCompile Include="BattleManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BattleMap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Card.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
       <Filter>Pokemon</Filter>
     </ClInclude>
     <ClInclude Include="BattleManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Card.h">

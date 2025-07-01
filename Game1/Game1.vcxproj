@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleManager.cpp" />
-    <ClCompile Include="BattleMap.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -37,7 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleManager.h" />
-    <ClInclude Include="BattleMap.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="ComputerPlayer.h" />
     <ClInclude Include="GameManager.h" />

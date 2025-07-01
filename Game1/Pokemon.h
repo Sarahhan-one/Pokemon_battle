@@ -10,7 +10,7 @@ enum class Type {
 
 class Pokemon
 {
-private:
+protected:
 	vector<Type> types_;
 	vector<Card> cards_;
 	int maxHp_;
@@ -19,11 +19,11 @@ private:
 
 public:
 	Pokemon()
-		: types_(vector<Type>()), cards_(vector<Card>()), maxHp_(0), hp_(0), pos_(Position()) {
+		: maxHp_(0), hp_(0), pos_(Position()) {
 	}
 
-	Pokemon(vector<Type>& types, vector<Card>& cards, int maxHp, int hp, Position pos)
-		: types_(types), cards_(cards), maxHp_(maxHp), hp_(hp), pos_(pos) {
+	Pokemon(int maxHp, int hp, Position pos)
+		: maxHp_(maxHp), hp_(hp), pos_(pos) {
 	}
 
 	vector<Type> getType() const { return types_; }
@@ -33,7 +33,7 @@ public:
 
 	bool isAlive() const;
 	virtual void takeAttack(const int damage);
-
+	void excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
 };
 
 

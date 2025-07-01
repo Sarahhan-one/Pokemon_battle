@@ -6,18 +6,18 @@ class Player
 {
 protected:
 	string name_;
-	Pokemon unit_;
+	Pokemon pokemon_;
 
 public:
-	Player() : name_(""), unit_(Pokemon()) {}
+	Player() : name_(""), pokemon_(Pokemon()) {}
 	Player(string name) : name_(name) {}
 
 	string getName() { return name_; }
 	void setName(string name) { name_ = name; }
-	void selectUnit(Pokemon unit) { unit_ = unit; }
+	void selectPokemon(Pokemon pokemon) { pokemon_ = pokemon; }
 
-	Pokemon& getUnit() { return unit_; }
-	const Pokemon& getUnit() const { return unit_; }
+	Pokemon& getPokemon() { return pokemon_; }
+	const Pokemon& getPokemon() const { return pokemon_; }
 
 	virtual void selectCardsForStage() = 0;
 	virtual void executeCurrentCard() = 0;
