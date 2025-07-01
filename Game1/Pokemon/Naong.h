@@ -3,5 +3,6 @@
 
 class Naong : public Pokemon
 {
+private:
 };
 
