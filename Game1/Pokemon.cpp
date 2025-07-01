@@ -10,7 +10,7 @@ void Pokemon::takeAttack(int damage)
 	hp_ -= damage;
 }
 
-void Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
+vector<Position>& Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
 {
-	cards_[cardInd].executeCard(map);
+	return cards_[cardInd].executeCard(map);
 }

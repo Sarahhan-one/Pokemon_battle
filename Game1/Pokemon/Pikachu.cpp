@@ -1,5 +1,7 @@
 #include "Pikachu.h"
 
-void Pikachu::thunderbolt(vector<vector<Pokemon*>>& map)
+vector<Position>& Pikachu::thunderbolt(vector<vector<Pokemon*>>& map)
 {
+	vector<Position> tmp;
+	return tmp;
 }

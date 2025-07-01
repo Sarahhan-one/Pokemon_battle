@@ -33,7 +33,7 @@ public:
 
 	bool isAlive() const;
 	virtual void takeAttack(const int damage);
-	void excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
+	vector<Position>& excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
 };
 
 
