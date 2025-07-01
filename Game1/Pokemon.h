@@ -18,13 +18,8 @@ protected:
 	Position pos_;
 
 public:
-	Pokemon()
-		: maxHp_(0), hp_(0), pos_(Position()) {
-	}
-
-	Pokemon(int maxHp, int hp, Position pos)
-		: maxHp_(maxHp), hp_(hp), pos_(pos) {
-	}
+	Pokemon();
+	Pokemon(int maxHp, int hp, Position pos);
 
 	vector<Type> getType() const { return types_; }
 	int getHp() const { return hp_; }
@@ -33,7 +28,13 @@ public:
 
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);
-	vector<Position>& excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
+	vector<Position> excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
+
+	//movements
+	vector<Position> moveUp(vector<vector<Pokemon*>>& map);
+	vector<Position> moveDown(vector<vector<Pokemon*>>& map);
+	vector<Position> moveLeft(vector<vector<Pokemon*>>& map);
+	vector<Position> moveRight(vector<vector<Pokemon*>>& map);
 };
 
 

@@ -11,6 +11,9 @@
 
 using namespace std;
 
+#define MAX_Y 3
+#define MAX_X 4
+
 struct Position {
 	int y, x;
 

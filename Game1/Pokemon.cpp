@@ -1,8 +1,30 @@
 #include "Pokemon.h"
 
+Pokemon::Pokemon() : Pokemon(0, 0, Position())
+{
+}
+
+Pokemon::Pokemon(int maxHp, int hp, Position pos)
+	: maxHp_(maxHp), hp_(hp), pos_(pos)
+{
+	static vector<Position> res;
+	cards_.push_back(Card("MoveUp", CardType::MOVE, [this](vector<vector<Pokemon*>>& map) -> vector<Position>{
+		return moveUp(map);
+		}));
+	cards_.push_back(Card("MoveDown", CardType::MOVE, [this](vector<vector<Pokemon*>>& map) -> vector<Position>{
+		return moveDown(map);
+		}));
+	cards_.push_back(Card("MoveLeft", CardType::MOVE, [this](vector<vector<Pokemon*>>& map) -> vector<Position>{
+		return moveLeft(map);
+		}));
+	cards_.push_back(Card("MoveRight", CardType::MOVE, [this](vector<vector<Pokemon*>>& map) -> vector<Position>{
+		return moveRight(map);
+		}));
+}
+
 bool Pokemon::isAlive() const
 {
-	return hp_ <= 0;
+	return hp_ > 0;
 }
 
 void Pokemon::takeDamage(int damage)
@@ -10,7 +32,43 @@ void Pokemon::takeDamage(int damage)
 	hp_ -= damage;
 }
 
-vector<Position>& Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
+vector<Position> Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
 {
 	return cards_[cardInd].executeCard(map);
+}
+
+vector<Position> Pokemon::moveUp(vector<vector<Pokemon*>>& map)
+{
+	vector<Position> result;
+	if (pos_.y > 0 && map[pos_.y - 1][pos_.x] == nullptr) {
+		pos_.y -= 1;
+	}
+	return result;
+}
+
+vector<Position> Pokemon::moveDown(vector<vector<Pokemon*>>& map)
+{
+	vector<Position> result;
+	if (pos_.y + 1 < MAX_Y && map[pos_.y + 1][pos_.x] == nullptr) {
+		pos_.y += 1;
+	}
+	return result;
+}
+
+vector<Position> Pokemon::moveLeft(vector<vector<Pokemon*>>& map)
+{
+	vector<Position> result;
+	if (pos_.x > 0 && map[pos_.y][pos_.x - 1] == nullptr) {
+		pos_.x -= 1;
+	}
+	return result;
+}
+
+vector<Position> Pokemon::moveRight(vector<vector<Pokemon*>>& map)
+{
+	vector<Position> result;
+	if (pos_.x + 1 < MAX_X && map[pos_.y][pos_.x + 1] == nullptr) {
+		pos_.x += 1;
+	}
+	return result;
 }

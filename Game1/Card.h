@@ -17,15 +17,15 @@ class Card
 private:
 	string name_;
 	CardType type_;
-	std::function<vector<Position>& (vector<vector<Pokemon*>>&)> executeFunc_;
+	function<vector<Position> (vector<vector<Pokemon*>>&)> executeFunc_;
 
 public:
-	Card(string name, CardType type, std::function<vector<Position>& (vector<vector<Pokemon*>>& map)> executeFunc)
+	Card(string name, CardType type, function<vector<Position> (vector<vector<Pokemon*>>& map)> executeFunc)
 		: name_(name), type_(type), executeFunc_(executeFunc) {
 	}
 
 	string getName() const { return name_; }
 	CardType getType() const { return type_; }
-	vector<Position>& executeCard(vector<vector<Pokemon*>>& map);
+	vector<Position> executeCard(vector<vector<Pokemon*>>& map);
 };
 
