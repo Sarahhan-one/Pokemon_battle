@@ -4,15 +4,13 @@
 class Card
 {
 private:
-	string name;
-	int powerPoint_;
-	void (*executeCard_)(void);
+	string name_;
+	void (*executeFunc_)(void);
 
 public:
-	Card(int powerPoint) : powerPoint_(powerPoint), executeCard_(nullptr) {}
+	Card(string name, void (*executeFunc)(void)) : name_(), executeFunc_(executeFunc) {}
 
-	Card(int powerPoint, void (*executeCard)(void)) :powerPoint_(powerPoint), executeCard_(executeCard) {}
-
-	int getPowerPoint() const { return powerPoint_; }
+	string getName() const { return name_; }
+	void executeCard();
 };
 
