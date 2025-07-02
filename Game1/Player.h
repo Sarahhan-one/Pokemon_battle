@@ -11,6 +11,7 @@ protected:
 public:
 	Player() : Player("") {}
 	Player(string name) : name_(name), pokemon_(nullptr) {}
+	~Player() { delete pokemon_; }
 
 	string getName() { return name_; }
 	void setName(string name) { name_ = name; }
