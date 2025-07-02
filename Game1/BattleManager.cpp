@@ -2,43 +2,43 @@
 
 void BattleManager::init()
 {
-	//battleMap_.setTile(humanPlayer_.getUnit().getPos(), 1); // 1 = character
-	//battleMap_.setTile(computerPlayer_.getUnit().getPos(), 2); // 2 = opponent
-	isBattleEnd_ = false; 
+	isBattleEnd_ = false;
 	currentTurn_ = 0;
+}
+
+void BattleManager::executeBattle()
+{
+	//battle loop logic
+	while (true) {
+		system("cls");
+		printMap();
+		selectCardsForStage();
+		
+		for (int i = 0; i < 3; i++) {
+
+			system("cls");
+			humanPlayer_->executeCard(map_, humanCardList_[i]);
+			printMap();
+			Sleep(1500);
+			system("cls");
+			computerPlayer_->executeCard(map_, computerCardList[i]);
+			printMap();
+			Sleep(1500);
+			system("cls");
+		}
+	}
+
+	Sleep(2000);
+	system("cls");
+	std::cout << "전투가 종료되었습니다.\n";
 }
 
 void BattleManager::selectCardsForStage()
 {
-	//for now, just print whose turn it is
-	std::cout << "Turn: " << (currentTurn_ % 2 == 0 ? "Player" : "Opponent") << std::endl;
+	humanCardList_ = humanPlayer_->selectCardsForStage();
+	computerCardList = computerPlayer_->selectCardsForStage();
 }
 
-void BattleManager::executeCurrentCard()
-{
-	if (currentTurn_ % 2 == 0) {
-		std::cout << "1. Move \n2. Attck \n";
-		int action; 
-		std::cin >> action;
-		
-		if (action == 1) {
-			int x, y;
-			std::cout << "new location (y, x): ";
-			std::cin >> y >> x; 
-			Position newPos(x, y);
-			if (map_[y][x] == nullptr) {
-				humanPlayer_.getPokemon().setPos(newPos);
-				map_[y][x] = &humanPlayer_.getPokemon();
-			}
-		}
-		if (action == 2) { //need to add battle logic
-		}
-	} 
-	else { //opponent's turn
-
-	}
-	currentTurn_++;
-}
 
 bool BattleManager::getIsBattleEnd()
 {
@@ -52,15 +52,20 @@ void BattleManager::setIsBattleEnd(bool isBattleEnd)
 
 void BattleManager::printMap()
 {
-	for (int i = 0; i < map_[0].size(); i++) {
-		for (Pokemon* cur : map_[i]) {
-			if (cur == nullptr) {
-				cout << 0;
+	Position playerPos = humanPlayer_->getPokemon().getPos();
+	Position compPos = computerPlayer_->getPokemon().getPos();
+
+	for (int y = 0; y < MAX_Y; y++) {
+		for (int x = 0; x < MAX_X; x++) {
+			if (playerPos.y == y && playerPos.x == x) {
+				cout << "P "; //player
 			}
-			else { // 포켓몬에 따라서 다르게 해야할 듯? 또는 포켓몬 넘버 부여
-				cout << 1;
+			else if (playerPos.y == y && compPos.x == x) {
+				cout << "C "; //computer
 			}
-			cout << ' ';
+			else {
+				cout << "0 ";
+			}
 		}
 		cout << '\n';
 	}

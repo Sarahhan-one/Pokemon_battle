@@ -9,7 +9,7 @@ public:
 	HumanPlayer() : Player() {}
 	HumanPlayer(string name) : Player(name) {}
 
-	void selectCardsForStage() override;
-	void executeCurrentCard() override;
+	vector<int> selectCardsForStage() override;
+	void executeCard(vector<vector<Pokemon*>> map, int cardInd) override;
 };
 

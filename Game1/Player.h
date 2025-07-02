@@ -6,20 +6,19 @@ class Player
 {
 protected:
 	string name_;
-	Pokemon pokemon_;
+	Pokemon* pokemon_;
 
 public:
-	Player() : name_(""), pokemon_(Pokemon()) {}
-	Player(string name) : name_(name) {}
+	Player() : Player("") {}
+	Player(string name) : name_(name), pokemon_(nullptr) {}
 
 	string getName() { return name_; }
 	void setName(string name) { name_ = name; }
-	void selectPokemon(Pokemon pokemon) { pokemon_ = pokemon; }
+	void selectPokemon(Pokemon* const pokemon) { pokemon_ = pokemon; }
 
-	Pokemon& getPokemon() { return pokemon_; }
-	const Pokemon& getPokemon() const { return pokemon_; }
+	Pokemon& getPokemon() { return *pokemon_; }
 
-	virtual void selectCardsForStage() = 0;
-	virtual void executeCurrentCard() = 0;
+	virtual vector<int> selectCardsForStage() { return vector<int>(); }
+	virtual void executeCard(vector<vector<Pokemon*>> map, int cardInd) = 0;
 };
 

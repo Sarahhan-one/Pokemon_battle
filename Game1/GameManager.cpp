@@ -1,4 +1,10 @@
 #include "GameManager.h"
+#include "Pokemon/Pikachu.h"
+#include "Pokemon/Kkobugi.h"
+#include "Pokemon/Pairi.h"
+#include "Pokemon/Naong.h"
+#include "Pokemon/Majayong.h"
+#include "Pokemon/Ttodogas.h"
 #include "Tools.h"
 
 void GameManager::init()
@@ -48,57 +54,59 @@ void GameManager::update()
         break;
 
     case GameState::BATTLE:
-        battleManager_.printMap();
-        //battle loop logic
-        battleManager_.selectCardsForStage();
-        battleManager_.executeCurrentCard();
-        if (battleManager_.getIsBattleEnd()) {
-            endBattle();
-        }
-        (void)_getch();
-        system("cls");
+        std::cout << "전투 시작!!\n";
+        Sleep(1000);
+        battleManager_.executeBattle();
         break;
 
     case GameState::EXIT:
         std::cout << "게임을 종료합니다.\n";
-        exit(0);  // 프로그램 종료
+        Sleep(2000);
+        exit(0);
         break;
     }
 }
 
-void GameManager::endBattle()
-{
-    std::cout << "전투가 종료되었습니다.\n";
-}
-
-void skill1() {}
-void skill2() {}
-void skill3() {}
-void skill4() {}
-
 void GameManager::selectCharacter()
 {
-    std::cout << "캐릭터를 선택하세요.\n";
-    std::cout << "1. Pikachu \n";
+    Pokemon* playerPokemon = nullptr;
+    Pokemon* opponentPokemon = new Naong(Position(1, 3));
 
-    int choice; 
-    std::cin >> choice; 
+    unsigned int choice = 3;
+    while (choice > 2) {
 
+        system("cls");
+        cout << "캐릭터를 선택하세요.\n";
+        cout << "\
+0. Pikachu\n\
+1. Kkobugi\n\
+2. Pairi\n";
+        cin >> choice;
 
-    void(*skills[4])(void) = { skill1, skill2, skill3, skill4 };
+        Position playerStPos = Position(1, 0);
 
-
-    Pokemon pokemon;
-    if (choice == 1) {
-        Pokemon pokemon;
-        pokemon.setPos(Position(0, 5));
+        switch (choice) {
+        case 0:
+            playerPokemon = new Pikachu(playerStPos);
+            break;
+        case 1:
+            playerPokemon = new Kkobugi(playerStPos);
+            break;
+        case 2:
+            playerPokemon = new Pairi(playerStPos);
+            break;
+        default:
+            system("cls");
+            cout << "유효하지 않은 입력 입니다.\n";
+            Sleep(2000);
+            break;
+        }
     }
-    
-    // assign to the player
-    battleManager_.setHumanUnit(pokemon);
 
-    // assign a random unit to the opponent
-    Pokemon opponent;
-    opponent.setPos(Position(9, 5));
-    battleManager_.setComputerUnit(opponent);
+    string name = typeid(*playerPokemon).name();
+    cout << "\nSelected Pokemon : " << name << endl;
+    Sleep(1000);
+
+    battleManager_.setHumanPokemon(playerPokemon);
+    battleManager_.setComputerPokemon(opponentPokemon);
 }

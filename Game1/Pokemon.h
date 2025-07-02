@@ -18,13 +18,14 @@ protected:
 	Position pos_;
 
 public:
-	Pokemon();
+	//Pokemon();
 	Pokemon(int maxHp, int hp, Position pos);
 
 	vector<Type> getType() const { return types_; }
 	int getHp() const { return hp_; }
 	Position getPos() const { return pos_; }
 	void setPos(const Position pos) { pos_ = pos; }
+	vector<Card> getCards() const { return cards_; }
 
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);

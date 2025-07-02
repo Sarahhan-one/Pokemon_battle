@@ -26,6 +26,6 @@ public:
 
 	string getName() const { return name_; }
 	CardType getType() const { return type_; }
-	vector<Position> executeCard(vector<vector<Pokemon*>>& map);
+	vector<Position> executeCard(vector<vector<Pokemon*>>& map) const;
 };
 

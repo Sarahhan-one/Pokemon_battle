@@ -1,8 +1,8 @@
 #include "Pokemon.h"
 
-Pokemon::Pokemon() : Pokemon(0, 0, Position())
-{
-}
+//Pokemon::Pokemon() : Pokemon(0, 0, Position())
+//{
+//}
 
 Pokemon::Pokemon(int maxHp, int hp, Position pos)
 	: maxHp_(maxHp), hp_(hp), pos_(pos)
