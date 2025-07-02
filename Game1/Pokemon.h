@@ -23,6 +23,7 @@ public:
 
 	vector<Type> getType() const { return types_; }
 	int getHp() const { return hp_; }
+	int getMaxHp() const { return maxHp_; }
 	Position getPos() const { return pos_; }
 	void setPos(const Position pos) { pos_ = pos; }
 	vector<Card> getCards() const { return cards_; }

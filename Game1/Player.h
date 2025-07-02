@@ -20,6 +20,6 @@ public:
 	Pokemon& getPokemon() { return *pokemon_; }
 
 	virtual vector<int> selectCardsForStage() { return vector<int>(); }
-	virtual void executeCard(vector<vector<Pokemon*>> map, int cardInd) = 0;
+	virtual vector<Position> executeCard(vector<vector<Pokemon*>> map, int cardInd) = 0;
 };
 

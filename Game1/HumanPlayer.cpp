@@ -28,10 +28,9 @@ vector<int> HumanPlayer::selectCardsForStage()
 	return selectedCardInds;
 }
 
-void HumanPlayer::executeCard(vector<vector<Pokemon*>> map, int cardInd)
+vector<Position> HumanPlayer::executeCard(vector<vector<Pokemon*>> map, int cardInd)
 {
 	Card card = pokemon_->getCards()[cardInd];
-	cout << "Player Use Card \"" << card.getName() << "\"" << endl;
-	card.executeCard(map);
+	return card.executeCard(map);
 }
 

@@ -25,8 +25,12 @@ public:
 	void selectCardsForStage();
 	bool getIsBattleEnd();
 	void setIsBattleEnd(bool isBattleEnd);
-	
+
+	// move, attack µÓ¿« effect ∏¶ print
+	void showEffect(vector<Position> poss, CardType cardType, string effectName, string userName);
+
 	void printMap();
+	void printMap(vector<vector<char>> effectMap);
 
 	void setHumanPokemon(Pokemon* const pokemon) { humanPlayer_->selectPokemon(pokemon); }
 	void setComputerPokemon(Pokemon* const pokemon) { computerPlayer_->selectPokemon(pokemon); }

@@ -18,9 +18,8 @@ vector<int> ComputerPlayer::selectCardsForStage()
     return selectedCardInds;
 }
 
-void ComputerPlayer::executeCard(vector<vector<Pokemon*>> map, int cardInd)
+vector<Position> ComputerPlayer::executeCard(vector<vector<Pokemon*>> map, int cardInd)
 {
     Card card = pokemon_->getCards()[cardInd];
-    cout << "Computer Use Card \"" << card.getName() << "\"" << endl;
-    card.executeCard(map);
+    return card.executeCard(map);
 }
