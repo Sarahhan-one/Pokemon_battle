@@ -31,6 +31,7 @@ public:
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);
 	vector<Position> excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
+	vector<Position> rangeMap(vector<vector<Pokemon*>>& map, vector<int>& range);
 
 	//movements
 	vector<Position> moveUp(vector<vector<Pokemon*>>& map);

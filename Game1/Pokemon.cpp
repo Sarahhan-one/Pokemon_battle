@@ -37,6 +37,22 @@ vector<Position> Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
 	return cards_[cardInd].executeCard(map);
 }
 
+vector<Position> Pokemon::rangeMap(vector<vector<Pokemon*>>& map, vector<int>& range) {
+	vector<Position> tmp;
+	for (auto& point : range) {
+		if (point == 1) tmp.push_back({ pos_.y - 1, pos_.x - 1 });
+		if (point == 2) tmp.push_back({ pos_.y, pos_.x - 1 });
+		if (point == 3) tmp.push_back({ pos_.y + 1, pos_.x - 1 });
+		if (point == 4) tmp.push_back({ pos_.y - 1, pos_.x });
+		if (point == 5) tmp.push_back({ pos_.y, pos_.x });
+		if (point == 6) tmp.push_back({ pos_.y + 1, pos_.x });
+		if (point == 7) tmp.push_back({ pos_.y - 1, pos_.x + 1 });
+		if (point == 8) tmp.push_back({ pos_.y, pos_.x + 1 });
+		if (point == 9) tmp.push_back({ pos_.y + 1, pos_.x + 1 });
+	}
+	return tmp;
+}
+
 vector<Position> Pokemon::moveUp(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
