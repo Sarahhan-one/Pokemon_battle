@@ -11,7 +11,7 @@ public:
 	Majayong(Position pos) : Pokemon(MAJ_HP, MAJ_HP, pos)
 	{
 		name_ = "Majayong";
-
 	}
+
 };
 
