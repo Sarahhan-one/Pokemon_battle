@@ -4,6 +4,7 @@
         Title="MainWindow" Height="600" Width="800">
 
     <DockPanel Name="RootPanel">
+        <Image Name="Player_1_Image" Width="100"/>
 
         <!-- 상단 버튼 영역 -->
         <StackPanel Name="ControlPanel" DockPanel.Dock="Top" Margin="20">
@@ -12,7 +13,6 @@
         </StackPanel>
 
 
-        <Image Name="Player_1_Image" Width="100" Height="100"/>
         
         <!-- 게임 UI: 체력 / 카드 효과 / 맵 출력 -->
         <StackPanel Name="GamePanel" Visibility="Collapsed">

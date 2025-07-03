@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using CppCliWrapper;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CppCliWrapper;
+using System.IO;
 
 namespace Demon_battle
 {
@@ -22,6 +24,11 @@ namespace Demon_battle
         {
             InitializeComponent();
             game = new Wrapper();
+
+            //List<List<string>> paths = new List<List<string>>();
+            //paths.Add(new List<string> { "../../../../Image/Pairi.png", "../../../../Image/Kkobugi.png" });
+            //paths.Add(new List<string> { "../../../../Image/Naong.png", "../../../../Image/Pikachu.png" });
+            //ShowImages(paths);
 
             // Register C# function to be called from C++
             Wrapper.RegisterImageCallback(ShowImages);
@@ -39,14 +46,7 @@ namespace Demon_battle
 
         public static void ShowImages(List<List<string>> paths)
         {
-        var window = (MainWindow)Application.Current.MainWindow;
-
-            var imageControl = window.FindName($"Player_{1}_Image") as Image;
-            if (imageControl != null)
-            {
-                string imagePath = paths[1][0];
-                imageControl.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
-            }
+            var window = (MainWindow)Application.Current.MainWindow;
 
             window.ImageGrid.Children.Clear();
             window.ImageGrid.RowDefinitions.Clear();
@@ -81,17 +81,48 @@ namespace Demon_battle
                         Grid.SetRow(rect, r);
                         Grid.SetColumn(rect, c);
                         window.ImageGrid.Children.Add(rect);
+                        continue;
+                    }
+
+                    string fullPath = System.IO.Path.GetFullPath(path);
+                    if (!File.Exists(fullPath))
+                    {
+                        Debug.WriteLine($"[ERROR] 이미지 파일 없음: {fullPath}");
+                        var errRect = new Border
+                        {
+                            Background = Brushes.Red,
+                            BorderThickness = new Thickness(1)
+                        };
+                        Grid.SetRow(errRect, r);
+                        Grid.SetColumn(errRect, c);
+                        window.ImageGrid.Children.Add(errRect);
                     }
                     else
                     {
-                        var image = new Image
+                        try
                         {
-                            Source = new BitmapImage(new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute)),
-                            Stretch = Stretch.Uniform
-                        };
-                        Grid.SetRow(image, r);
-                        Grid.SetColumn(image, c);
-                        window.ImageGrid.Children.Add(image);
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad; // 즉시 로딩
+                            bitmap.EndInit();
+
+                            var image = new Image
+                            {
+                                Source = bitmap,
+                                Stretch = Stretch.Uniform,
+                                Width = 64,   // ✔ 크기 지정 (안하면 안 보일 수도 있음)
+                                Height = 64
+                            };
+                            Grid.SetRow(image, r);
+                            Grid.SetColumn(image, c);
+                            window.GamePanel.Visibility = Visibility.Visible;
+                            window.ImageGrid.Children.Add(image);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[ERROR] 이미지 로딩 실패: {fullPath} - {ex.Message}");
+                        }
                     }
                 }
             }
