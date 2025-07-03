@@ -1,5 +1,9 @@
 #include "BattleManager.h"
 
+#define _CONSOLE 1
+
+extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths);
+
 void BattleManager::init()
 {
 	isBattleEnd_ = false;
@@ -10,6 +14,14 @@ void BattleManager::init()
 
 	map_[playerPos.y][playerPos.x] = &humanPlayer_->getPokemon();
 	map_[compPos.y][compPos.x] = &computerPlayer_->getPokemon();
+
+	//imageHash_[ImageName::BLANK] = "";
+	//imageHash_[ImageName::PIKA] = "pika.png";
+	//imageHash_[ImageName::PAI] = "pai.png";
+	//imageHash_[ImageName::KKO] = "kko.png";
+	//imageHash_[ImageName::NAO] = "nao.png";
+	//imageHash_[ImageName::MAJ] = "maj.png";
+	//imageHash_[ImageName::TTO] = "tto.png";
 }
 
 void BattleManager::executeBattle()
@@ -22,6 +34,7 @@ void BattleManager::executeBattle()
 		selectCardsForStage();
 		vector<Position> tmpPos;
 
+#if _CONSOLE
 		for (int i = 0; i < 3; i++) {
 			// Player's turn
 			tmpPos = humanPlayer_->executeCard(map_, humanCardList_[i]);
@@ -45,6 +58,32 @@ void BattleManager::executeBattle()
 				return;
 			}
 		}
+#else
+		for (int i = 0; i < 3; i++) {
+			// Player's turn
+			tmpPos = humanPlayer_->executeCard(map_, humanCardList_[i]);
+			Card tmp = humanPlayer_->getPokemon().getCards()[humanCardList_[i]];
+			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Player");
+			if (!computerPlayer_->getPokemon().isAlive()) {
+				lastResult_ = BattleResult::PLAYER_WIN;
+				system("cls");
+				Sleep(2000);
+				return; // End battle, GameManager handle next stage
+			}
+
+			// Computer's turn
+			tmpPos = computerPlayer_->executeCard(map_, computerCardList[i]);
+			tmp = computerPlayer_->getPokemon().getCards()[computerCardList[i]];
+			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Computer");
+			if (!humanPlayer_->getPokemon().isAlive()) {
+				lastResult_ = BattleResult::COMPUTER_WIN;
+				system("cls");
+				Sleep(2000);
+				return;
+			}
+		}
+#endif
+
 	}
 
 
@@ -140,7 +179,6 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 
 	system("cls");
 	printMap();
-
 }
 
 void BattleManager::printMap(vector<vector<char>> effectMap)
@@ -161,8 +199,30 @@ void BattleManager::printMap(vector<vector<char>> effectMap)
 	}
 }
 
+void BattleManager::drawWpfMap()
+{
+	vector<vector<string>> paths = vector<vector<string>>(MAX_Y, vector<string>(MAX_X));
+
+	for (int y = 0; y < MAX_Y; y++) {
+		for (int x = 0; x < MAX_X; x++) {
+			
+			if (map_[y][x] == nullptr) {
+				paths[y][x] = "";
+				continue;
+			}
+			
+			string className = typeid(*map_[y][x]).name();
+			
+			paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
+		}
+	}
+
+	CallDrawWpfMapFromNative(paths);
+}
+
 void BattleManager::printMap()
 {
+	drawWpfMap();
 	int playerHp = humanPlayer_->getPokemon().getHp();
 	int computerHp = computerPlayer_->getPokemon().getHp();
 	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();

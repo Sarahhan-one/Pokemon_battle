@@ -10,6 +10,7 @@
 #include "conio.h"
 #include <windows.h>
 #include <random>
+#include <unordered_map>
 
 using namespace std;
 

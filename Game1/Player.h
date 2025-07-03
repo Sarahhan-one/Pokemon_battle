@@ -18,6 +18,7 @@ public:
 	void selectPokemon(Pokemon* const pokemon) { pokemon_ = pokemon; }
 
 	Pokemon& getPokemon() { return *pokemon_; }
+	Pokemon* getPokemonPtr() { return pokemon_; }
 
 	virtual vector<int> selectCardsForStage() { return vector<int>(); }
 	virtual vector<Position> executeCard(vector<vector<Pokemon*>> map, int cardInd) = 0;

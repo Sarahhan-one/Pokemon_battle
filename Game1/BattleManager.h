@@ -4,6 +4,10 @@
 
 enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
 
+enum class ImageName {
+	BLANK, PIKA, PAI, KKO, NAO, MAJ, TTO
+};
+
 class BattleManager
 {
 private:
@@ -16,6 +20,7 @@ private:
 	int currentTurn_;
 	bool isBattleEnd_;
 	BattleResult lastResult_ = BattleResult::NONE;
+	unordered_map<ImageName, string> imageHash_;
 
 public:
 	BattleManager() : currentTurn_(0), isBattleEnd_(false),
@@ -33,9 +38,12 @@ public:
 
 	// move, attack µÓ¿« effect ∏¶ print
 	void showEffect(vector<Position> poss, CardType cardType, string effectName, string userName);
+	void showWpfEffect();
 
 	void printMap();
 	void printMap(vector<vector<char>> effectMap);
+
+	void drawWpfMap();
 
 	void setHumanPokemon(Pokemon* const pokemon) { humanPlayer_->selectPokemon(pokemon); }
 	void setComputerPokemon(Pokemon* const pokemon) { computerPlayer_->selectPokemon(pokemon); }

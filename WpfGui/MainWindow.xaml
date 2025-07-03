@@ -1,6 +1,28 @@
-﻿<Window x:Class="Demon_battle.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="MainWindow" Height="200" Width="300">
-    <StackPanel Margin="20">
-        <Button Content="게임 시작" Click="StartGame_Click" Margin="0,0,0,10"/>
-        <Button Content="게임 종료" Click="EndGame_Click"/>
-    </StackPanel>
+﻿<Window x:Class="Demon_battle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="800">
+
+    <DockPanel Name="RootPanel">
+
+        <!-- 상단 버튼 영역 -->
+        <StackPanel Name="ControlPanel" DockPanel.Dock="Top" Margin="20">
+            <Button Content="게임 시작" Click="StartGame_Click" Margin="0,0,0,10"/>
+            <Button Content="게임 종료" Click="EndGame_Click"/>
+        </StackPanel>
+
+
+        <Image Name="Player_1_Image" Width="100" Height="100"/>
+        
+        <!-- 게임 UI: 체력 / 카드 효과 / 맵 출력 -->
+        <StackPanel Name="GamePanel" Visibility="Collapsed">
+            <!-- 체력 및 메시지 출력 -->
+            <TextBlock Name="StatusText" FontSize="16" Margin="10" TextWrapping="Wrap"/>
+
+            <!-- 이미지 그리드 출력 -->
+            <ScrollViewer Height="500">
+                <Grid Name="ImageGrid" Margin="10"/>
+            </ScrollViewer>
+        </StackPanel>
+    </DockPanel>
 </Window>

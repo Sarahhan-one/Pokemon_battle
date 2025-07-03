@@ -1,6 +1,19 @@
 #include "pch.h"
 
 #include "Wrapper.h"
+#include "../Game1/GameManager.h"
+#include "../Game1/BattleManager.h"
+
+using namespace CppCliWrapper;
+using namespace System::Runtime::InteropServices;
+
+
+void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths)
+{
+    CppCliWrapper::Wrapper::CallManagedShowImages(paths);
+}
+
+// ShowImagesCallback^ Wrapper::imageCallback = nullptr;
 
 CppCliWrapper::Wrapper::Wrapper() {
 	gameManager = new GameManager();
@@ -16,4 +29,25 @@ void CppCliWrapper::Wrapper::StartGame() {
 
 void CppCliWrapper::Wrapper::EndGame() {
 	gameManager->exitGame();
+}
+
+void CppCliWrapper::Wrapper::RegisterImageCallback(ShowImagesCallback^ cb)
+{
+    imageCallback = cb;
+}
+
+void CppCliWrapper::Wrapper::CallManagedShowImages(const std::vector<std::vector<std::string>>& paths)
+{
+    if (imageCallback == nullptr) return;
+
+    auto managedList = gcnew List<List<String^>^>();
+    for (const auto& row : paths)
+    {
+        auto managedRow = gcnew List<String^>();
+        for (const auto& s : row)
+            managedRow->Add(gcnew String(s.c_str()));
+        managedList->Add(managedRow);
+    }
+
+    imageCallback(managedList);
 }
