@@ -10,6 +10,7 @@ private:
 public:
 	Pairi(Position pos) : Pokemon(PAI_HP, PAI_HP, pos)
 	{
+		name_ = "Pairi";
 		//cards_.push_back(Card("thunderbolt",
 		//	CardType::ATTACK,
 		//	[this](vector<vector<Pokemon*>>& map) -> vector<Position>&{

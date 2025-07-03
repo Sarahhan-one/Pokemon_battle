@@ -14,26 +14,37 @@ void BattleManager::init()
 
 void BattleManager::executeBattle()
 {
-	//battle loop logic
+	lastResult_ = BattleResult::NONE;
 	while (true) {
 		system("cls");
 		printMap();
 		selectCardsForStage();
 		vector<Position> tmpPos;
-		
+
 		for (int i = 0; i < 3; i++) {
+			// Player's turn
 			tmpPos = humanPlayer_->executeCard(map_, humanCardList_[i]);
 			Card tmp = humanPlayer_->getPokemon().getCards()[humanCardList_[i]];
 			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Player");
+			if (!computerPlayer_->getPokemon().isAlive()) {
+				lastResult_ = BattleResult::PLAYER_WIN;
+				system("cls");
+				Sleep(2000);
+				return; // End battle, GameManager handle next stage
+			}
+
+			// Computer's turn
 			tmpPos = computerPlayer_->executeCard(map_, computerCardList[i]);
 			tmp = computerPlayer_->getPokemon().getCards()[computerCardList[i]];
 			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Computer");
+			if (!humanPlayer_->getPokemon().isAlive()) {
+				lastResult_ = BattleResult::COMPUTER_WIN;
+				system("cls");
+				Sleep(2000);
+				return; 
+			}
 		}
 	}
-
-	Sleep(2000);
-	system("cls");
-	std::cout << "전투가 종료되었습니다.\n";
 }
 
 void BattleManager::selectCardsForStage()
@@ -63,7 +74,7 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 	case CardType::MOVE:
 		system("cls");
 		printMap();
-		cout << "<<<<<<<<< " << userName << " Move >>>>>>>>>";
+		cout << "<<<<<<<<< " << userName << ' ' << effectName << " >>>>>>>>>";
 		Sleep(1000);
 		return;
 	default:
@@ -136,8 +147,8 @@ void BattleManager::printMap(vector<vector<char>> effectMap)
 	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
 	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
 
-	cout << "Player HP: " << playerHp << " / " << playerMaxHp << "\n";
-	cout << "Computer HP: " << computerHp << " / " << computerMaxHp << "\n";
+	cout << humanPlayer_->getPokemon().getName() <<  " HP: " << playerHp << " / " << playerMaxHp << "\n";
+	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
 
 	for (int y = 0; y < MAX_Y; y++) {
 		for (int x = 0; x < MAX_X; x++) {
@@ -154,8 +165,8 @@ void BattleManager::printMap()
 	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
 	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
 
-	cout << "Player HP: " << playerHp << " / " << playerMaxHp << "\n";
-	cout << "Computer HP: " << computerHp << " / " << computerMaxHp << "\n";
+	cout << humanPlayer_->getPokemon().getName() << " HP: " << playerHp << " / " << playerMaxHp << "\n";
+	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
 
 	Position playerPos = humanPlayer_->getPokemon().getPos();
 	Position compPos = computerPlayer_->getPokemon().getPos();

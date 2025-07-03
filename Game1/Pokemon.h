@@ -16,6 +16,7 @@ protected:
 	int maxHp_;
 	int hp_;
 	Position pos_;
+	string name_; 
 
 public:
 	//Pokemon();
@@ -27,6 +28,8 @@ public:
 	Position getPos() const { return pos_; }
 	void setPos(const Position pos) { pos_ = pos; }
 	vector<Card> getCards() const { return cards_; }
+	virtual string getName() const { return name_; }
+
 
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);

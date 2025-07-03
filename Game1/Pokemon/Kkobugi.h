@@ -10,6 +10,7 @@ private:
 public:
 	Kkobugi(Position pos) : Pokemon(KKOBU_HP, KKOBU_HP, pos)
 	{
+		name_ = "Kkobugi";
 		//cards_.push_back(Card("thunderbolt",
 		//	CardType::ATTACK,
 		//	[this](vector<vector<Pokemon*>>& map) -> vector<Position>&{
