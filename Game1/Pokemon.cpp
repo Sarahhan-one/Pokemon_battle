@@ -29,7 +29,17 @@ bool Pokemon::isAlive() const
 
 void Pokemon::takeDamage(int damage)
 {
+	if (shield_) {
+		shield_ = false;
+		return;
+	}
 	hp_ -= damage;
+	if (hp_ < 0) hp_ = 0;
+}
+
+void Pokemon::takeHeal(int healAmount)
+{
+	hp_ += healAmount;
 }
 
 vector<Position> Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
@@ -38,17 +48,17 @@ vector<Position> Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
 }
 
 vector<Position> Pokemon::rangeMap(vector<vector<Pokemon*>>& map, vector<int>& range) {
-	vector<Position> tmp;
+	vector<Position> tmp = {};
 	for (auto& point : range) {
-		if (point == 1)	tmp.push_back({ pos_.x - 1, pos_.y - 1 });
-		if (point == 2) tmp.push_back({ pos_.x, pos_.y - 1 });
-		if (point == 3) tmp.push_back({ pos_.x + 1, pos_.y - 1 });
-		if (point == 4) tmp.push_back({ pos_.x - 1, pos_.y });
-		if (point == 5) tmp.push_back({ pos_.x, pos_.y });
-		if (point == 6) tmp.push_back({ pos_.x + 1, pos_.y });
-		if (point == 7) tmp.push_back({ pos_.x - 1, pos_.y + 1 });
-		if (point == 8) tmp.push_back({ pos_.x, pos_.y + 1 });
-		if (point == 9)	tmp.push_back({ pos_.x + 1, pos_.y + 1 });
+		if (point == 1)	tmp.push_back({ pos_.y - 1, pos_.x - 1 });
+		if (point == 2) tmp.push_back({ pos_.y - 1, pos_.x });
+		if (point == 3) tmp.push_back({ pos_.y - 1, pos_.x + 1 });
+		if (point == 4) tmp.push_back({ pos_.y, pos_.x - 1 });
+		if (point == 5) tmp.push_back({ pos_.y, pos_.x }); 
+		if (point == 6) tmp.push_back({ pos_.y, pos_.x + 1 });
+		if (point == 7) tmp.push_back({ pos_.y + 1, pos_.x - 1 });
+		if (point == 8) tmp.push_back({ pos_.y + 1, pos_.x });
+		if (point == 9)	tmp.push_back({ pos_.y + 1, pos_.x + 1 });
 	}
 	return tmp;
 }
@@ -57,7 +67,9 @@ vector<Position> Pokemon::moveUp(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.y > 0 && map[pos_.y - 1][pos_.x] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.y -= 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -66,7 +78,9 @@ vector<Position> Pokemon::moveDown(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.y + 1 < MAX_Y && map[pos_.y + 1][pos_.x] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.y += 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -75,7 +89,9 @@ vector<Position> Pokemon::moveLeft(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.x > 0 && map[pos_.y][pos_.x - 1] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.x -= 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -84,7 +100,9 @@ vector<Position> Pokemon::moveRight(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.x + 1 < MAX_X && map[pos_.y][pos_.x + 1] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.x += 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
