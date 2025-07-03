@@ -65,7 +65,7 @@ vector<Position> Pikachu::disCharge(vector<vector<Pokemon*>> map)
 vector<Position> Pikachu::electricBall(vector<vector<Pokemon*>> map)
 {
     int damage = 10;
-    vector<int> range = { 2, 4, 5, 6, 8 };
+    vector<int> range = { 1, 2, 3, 5 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
