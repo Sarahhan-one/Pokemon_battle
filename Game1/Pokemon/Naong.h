@@ -15,6 +15,6 @@ public:
 		//	[this](vector<vector<Pokemon*>>& map) -> vector<Position>&{
 		//		return this->thunderbolt(map);
 		//	}));
+		name_ = "Naong";
 	}
 };
-

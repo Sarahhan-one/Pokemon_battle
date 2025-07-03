@@ -9,8 +9,8 @@
 
 void GameManager::init()
 {
-    gameState_ = GameState::MENU; 
-    stageNumber_ = 1; 
+    gameState_ = GameState::MENU;
+    stageNumber_ = 1;
     battleManager_.init();
 }
 
@@ -57,6 +57,18 @@ void GameManager::update()
         std::cout << "전투 시작!!\n";
         Sleep(1000);
         battleManager_.executeBattle();
+        if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
+            std::cout << "Game Over! You lost.\n";
+            Sleep(2000);
+            gameState_ = GameState::MENU;
+        }
+        else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
+            std::cout << "You Win! Proceeding to next stage...\n";
+            Sleep(2000);
+            // Advance to next stage
+
+
+        }
         break;
 
     case GameState::EXIT:
@@ -110,7 +122,6 @@ void GameManager::selectCharacter()
     battleManager_.setHumanPokemon(playerPokemon);
     battleManager_.setComputerPokemon(opponentPokemon);
 }
-
 void GameManager::main()
 {
     GameManager gameManager;

@@ -2,6 +2,8 @@
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
 
+enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
+
 class BattleManager
 {
 private:
@@ -13,11 +15,13 @@ private:
 	vector<int> computerCardList;
 	int currentTurn_;
 	bool isBattleEnd_;
+	BattleResult lastResult_ = BattleResult::NONE;
 
 public:
 	BattleManager() : currentTurn_(0), isBattleEnd_(false),
-		humanPlayer_(new HumanPlayer()), computerPlayer_(new ComputerPlayer()), 
-		map_(vector<vector<Pokemon*>>(MAX_Y, vector<Pokemon*>(MAX_X))) {};
+		humanPlayer_(new HumanPlayer()), computerPlayer_(new ComputerPlayer()),
+		map_(vector<vector<Pokemon*>>(MAX_Y, vector<Pokemon*>(MAX_X))) {
+	};
 	~BattleManager() { delete humanPlayer_;  delete computerPlayer_; }
 
 	void init();
@@ -34,5 +38,6 @@ public:
 
 	void setHumanPokemon(Pokemon* const pokemon) { humanPlayer_->selectPokemon(pokemon); }
 	void setComputerPokemon(Pokemon* const pokemon) { computerPlayer_->selectPokemon(pokemon); }
+	BattleResult getLastResult() const { return lastResult_; }
 };
 

@@ -9,15 +9,37 @@ class Pikachu : public Pokemon
 private:
 
 public:
-	Pikachu(Position pos) : Pokemon(PIKA_HP, PIKA_HP, pos) 
+	Pikachu(Position pos) : Pokemon(PIKA_HP, PIKA_HP, pos)
 	{
-		cards_.push_back(Card("thunderbolt", 
+		name_ = "Pikachu";
+		cards_.push_back(Card("thunderbolt",
 			CardType::ATTACK,
-			[this](vector<vector<Pokemon*>>& map) -> vector<Position>{
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
 				return this->thunderbolt(map);
+			}));
+
+		cards_.push_back(Card("disCharge",
+			CardType::ATTACK,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->disCharge(map);
+			}));
+
+		cards_.push_back(Card("electricBall",
+			CardType::ATTACK,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->electricBall(map);
+			}));
+
+		cards_.push_back(Card("spark",
+			CardType::ATTACK,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->spark(map);
 			}));
 	}
 
-	vector<Position> thunderbolt(vector<vector<Pokemon*>>& map);
+	vector<Position> thunderbolt(vector<vector<Pokemon*>> map);
+	vector<Position> disCharge(vector<vector<Pokemon*>> map);
+	vector<Position> electricBall(vector<vector<Pokemon*>> map);
+	vector<Position> spark(vector<vector<Pokemon*>> map);
 };
 
