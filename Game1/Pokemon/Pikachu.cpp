@@ -7,20 +7,25 @@ vector<Position> Pikachu::thunderbolt(vector<vector<Pokemon*>> map)
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
-    for (auto& attackPos : rangeAttack) {
-        if (attackPos.x == pos_.x && attackPos.y == pos_.y) { // at current position
-            continue;
+    // Find the opponent in the map
+    Pokemon* opponent = nullptr;
+    for (const auto& row : map) {
+        for (Pokemon* p : row) {
+            if (p && p != this) {
+                opponent = p;
+                break;
+            }
         }
+        if (opponent) break;
+    }
 
-        // Bounds check (defensive, in case rangeMap ever returns out-of-bounds)
-        if (attackPos.y < 0 || attackPos.y >= map.size() ||
-            attackPos.x < 0 || attackPos.x >= map[0].size())
-            continue;
-
-        Pokemon* target = map[attackPos.y][attackPos.x];
-        // Only hit if there is a target and it's not self
-        if (target != nullptr && target != this) {
-            target->takeDamage(damage);
+    if (opponent) {
+        Position oppPos = opponent->getPos();
+        for (const auto& attackPos : rangeAttack) {
+            if (attackPos.x == oppPos.x && attackPos.y == oppPos.y) {
+                opponent->takeDamage(damage);
+                break; // Only hit once
+            }
         }
     }
     return rangeAttack;
@@ -33,19 +38,25 @@ vector<Position> Pikachu::disCharge(vector<vector<Pokemon*>> map)
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
-    for (auto& attackPos : rangeAttack) {
-        if (attackPos.x == pos_.x && attackPos.y == pos_.y) { // at current position
-            continue;
+    // Find the opponent in the map
+    Pokemon* opponent = nullptr;
+    for (const auto& row : map) {
+        for (Pokemon* p : row) {
+            if (p && p != this) {
+                opponent = p;
+                break;
+            }
         }
-        // Bounds check (defensive, in case rangeMap ever returns out-of-bounds)
-        if (attackPos.y < 0 || attackPos.y >= map.size() ||
-            attackPos.x < 0 || attackPos.x >= map[0].size())
-            continue;
+        if (opponent) break;
+    }
 
-        Pokemon* target = map[attackPos.y][attackPos.x];
-        // Only hit if there is a target and it's not self
-        if (target != nullptr && target != this) {
-            target->takeDamage(damage);
+    if (opponent) {
+        Position oppPos = opponent->getPos();
+        for (const auto& attackPos : rangeAttack) {
+            if (attackPos.x == oppPos.x && attackPos.y == oppPos.y) {
+                opponent->takeDamage(damage);
+                break; // Only hit once
+            }
         }
     }
     return rangeAttack;
@@ -54,23 +65,29 @@ vector<Position> Pikachu::disCharge(vector<vector<Pokemon*>> map)
 vector<Position> Pikachu::electricBall(vector<vector<Pokemon*>> map)
 {
     int damage = 10;
-    vector<int> range = { 2, 4, 5, 6, 8 };
+    vector<int> range = { 1, 2, 3, 5 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
-    for (auto& attackPos : rangeAttack) {
-        if (attackPos.x == pos_.x && attackPos.y == pos_.y) { // at current position
-            continue;
+    // Find the opponent in the map
+    Pokemon* opponent = nullptr;
+    for (const auto& row : map) {
+        for (Pokemon* p : row) {
+            if (p && p != this) {
+                opponent = p;
+                break;
+            }
         }
-        // Bounds check (defensive, in case rangeMap ever returns out-of-bounds)
-        if (attackPos.y < 0 || attackPos.y >= map.size() ||
-            attackPos.x < 0 || attackPos.x >= map[0].size())
-            continue;
+        if (opponent) break;
+    }
 
-        Pokemon* target = map[attackPos.y][attackPos.x];
-        // Only hit if there is a target and it's not self
-        if (target != nullptr && target != this) {
-            target->takeDamage(damage);
+    if (opponent) {
+        Position oppPos = opponent->getPos();
+        for (const auto& attackPos : rangeAttack) {
+            if (attackPos.x == oppPos.x && attackPos.y == oppPos.y) {
+                opponent->takeDamage(damage);
+                break; // Only hit once
+            }
         }
     }
     return rangeAttack;
@@ -83,20 +100,55 @@ vector<Position> Pikachu::spark(vector<vector<Pokemon*>> map)
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
-    for (auto& attackPos : rangeAttack) {
-        if (attackPos.x == pos_.x && attackPos.y == pos_.y) { // at current position
-            continue;
+    // Find the opponent in the map
+    Pokemon* opponent = nullptr;
+    for (const auto& row : map) {
+        for (Pokemon* p : row) {
+            if (p && p != this) {
+                opponent = p;
+                break;
+            }
         }
-        // Bounds check (defensive, in case rangeMap ever returns out-of-bounds)
-        if (attackPos.y < 0 || attackPos.y >= map.size() ||
-            attackPos.x < 0 || attackPos.x >= map[0].size())
-            continue;
+        if (opponent) break;
+    }
 
-        Pokemon* target = map[attackPos.y][attackPos.x];
-        // Only hit if there is a target and it's not self
-        if (target != nullptr && target != this) {
-            target->takeDamage(damage);
+    if (opponent) {
+        Position oppPos = opponent->getPos();
+        for (const auto& attackPos : rangeAttack) {
+            if (attackPos.x == oppPos.x && attackPos.y == oppPos.y) {
+                opponent->takeDamage(damage);
+                break; // Only hit once
+            }
         }
     }
     return rangeAttack;
 }
+
+vector<Position> Pikachu::heal(vector<vector<Pokemon*>> map)
+{
+    int healAmount = 20;
+    vector<int> range = { 5 };
+
+    vector<Position> healRange = rangeMap(map, range);
+
+    Pokemon* me = this;
+    if (me->getHp() + 20 > me->getMaxHp()) {
+        me->setHp(me->getMaxHp());
+    }
+    else {
+        me->setHp(me->getHp() + 20);
+    }
+    return healRange;
+}
+
+
+vector<Position> Pikachu::shield(vector<vector<Pokemon*>> map)
+{
+    Pokemon* me = this;
+    vector<int> range = { 5 };
+
+    vector<Position> shieldRange = rangeMap(map, range);
+    me->setShield( true );
+    return shieldRange;
+}
+

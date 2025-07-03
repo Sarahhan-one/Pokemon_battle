@@ -31,6 +31,16 @@ public:
 			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
 				return this->heatWave(map);
 			}));
+		cards_.push_back(Card("heal",
+			CardType::HEAL,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->heal(map);
+			}));
+		cards_.push_back(Card("shield",
+			CardType::SHIELD,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->shield(map);
+			}));
 	}
 
 
@@ -38,5 +48,7 @@ public:
 	vector<Position> fireBlast(vector<vector<Pokemon*>> map);
 	vector<Position> ember(vector<vector<Pokemon*>> map);
 	vector<Position> heatWave(vector<vector<Pokemon*>> map);
+	vector<Position> heal(vector<vector<Pokemon*>> map);
+	vector<Position> shield(vector<vector<Pokemon*>> map);
 
 };

@@ -2,6 +2,27 @@
 x64/
 Game1/x64/
 WpfGui/obj/
+WpfGui/bin/
 WpfGui/AssemblyInfo.cs
 
 .vs*
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+
+# Build outputs
+bin/
+obj/
+**/x64/
+**/x86/
+
+# Specific project build dirs
+WpfGui/bin/
+WpfGui/obj/
+Game1/x64/
+
+# OS-specific
+.DS_Store
+Thumbs.db
