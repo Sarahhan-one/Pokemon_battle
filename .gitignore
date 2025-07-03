@@ -1,5 +1,6 @@
 .vs/
 x64/
 Game1/x64/
+WpfGui/obj/Debug/
 
 .vs*
