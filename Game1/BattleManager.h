@@ -28,6 +28,7 @@ public:
 	void selectCardsForStage();
 	bool getIsBattleEnd();
 	void setIsBattleEnd(bool isBattleEnd);
+	Player* getHumanPlayer() { return humanPlayer_; }
 
 	// move, attack µÓ¿« effect ∏¶ print
 	void showEffect(vector<Position> poss, CardType cardType, string effectName, string userName);

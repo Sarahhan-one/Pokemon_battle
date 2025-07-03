@@ -57,16 +57,39 @@ void GameManager::update()
         std::cout << "전투 시작!!\n";
         Sleep(1000);
         battleManager_.executeBattle();
-        if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
+
+        if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) { // GAME OVER 
             std::cout << "Game Over! You lost.\n";
             Sleep(2000);
             gameState_ = GameState::MENU;
-        } else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
-            std::cout << "You Win! Proceeding to next stage...\n";
-            Sleep(2000);
-            // Advance to next stage
 
-   
+        } else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
+            stageNumber_++; // Advance to next stage
+            if (stageNumber_ > 3) { // FINAL WIN
+                std::cout << "You Won all the stages!!! Congrats!!! \n";
+                Sleep(2000);
+                gameState_ = GameState::MENU;
+
+            } else { // WIN PER STAGE
+                std::cout << "You Won! Proceeding to next stage... \n";
+                Sleep(2000);
+
+                // Restore HP and reset map for next stage
+                // Player's Pokemon stays, only opponent changes
+                Pokemon& playerPokemon = battleManager_.getHumanPlayer()->getPokemon();
+                playerPokemon.setPos(Position(1, 0));
+
+                while (playerPokemon.getHp() < playerPokemon.getMaxHp()) {
+                    playerPokemon.takeDamage(-1); // Heal by 1 until full
+                }
+
+                Pokemon* nextOpponent = createOpponentForStage(stageNumber_);
+                nextOpponent->setPos(Position(1, 3));
+                battleManager_.setComputerPokemon(nextOpponent);
+
+                battleManager_.init();
+                gameState_ = GameState::BATTLE;
+            }
         }
         break;
 
@@ -81,7 +104,7 @@ void GameManager::update()
 void GameManager::selectCharacter()
 {
     Pokemon* playerPokemon = nullptr;
-    Pokemon* opponentPokemon = new Naong(Position(1, 3));
+    Pokemon* opponentPokemon = new Naong(Position(1,3));
 
     unsigned int choice = 3;
     while (choice > 2) {
@@ -121,3 +144,16 @@ void GameManager::selectCharacter()
     battleManager_.setHumanPokemon(playerPokemon);
     battleManager_.setComputerPokemon(opponentPokemon);
 }
+
+Pokemon* GameManager::createOpponentForStage(int stage) {
+    Position OpponentStPos = Position(1, 3);
+    switch (stage) {
+    case 1:
+        return new Majayong(OpponentStPos);
+    case 2:
+        return new Ttodogas(OpponentStPos);
+    default:
+        return nullptr;
+    }
+}
+

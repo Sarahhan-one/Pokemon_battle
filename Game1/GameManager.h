@@ -22,6 +22,7 @@ public:
 	void update();
 	void endBattle();
 	void selectCharacter();
+	Pokemon* createOpponentForStage(int stage);
 };
 
 
