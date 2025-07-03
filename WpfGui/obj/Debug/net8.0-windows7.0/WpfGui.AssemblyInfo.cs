@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WpfGui")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfefd85e3129b09d7effb5d74e9e04c7ac9dae99")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5803720990449aaea1c8489a8f7ca7361666bf53")]
 [assembly: System.Reflection.AssemblyProductAttribute("WpfGui")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WpfGui")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
