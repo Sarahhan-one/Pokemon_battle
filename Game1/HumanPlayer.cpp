@@ -12,7 +12,6 @@ vector<int> HumanPlayer::selectCardsForStage()
 
 	cout << "Select three different cards !!\n";
 
-	int in;
 	vector<int> selectedCardInds;
 	while (selectedCardInds.size() < 3) {
 		int in;

@@ -46,8 +46,6 @@ void BattleManager::executeBattle()
 			}
 		}
 	}
-
-
 }
 
 void BattleManager::selectCardsForStage()
@@ -102,7 +100,7 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 				curOut = 'P';
 				curOutBlank = curOut;
 			}
-			else if (playerPos.y == y && compPos.x == x) {
+			else if (compPos.y == y && compPos.x == x) {
 				curOut = 'C';
 				curOutBlank = curOut;
 			}
