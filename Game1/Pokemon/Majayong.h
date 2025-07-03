@@ -1,5 +1,5 @@
 #pragma once
-#include "Pokemon.h"
+#include "../Pokemon.h"
 
 #define MAJ_HP 80
 
