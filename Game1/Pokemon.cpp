@@ -57,7 +57,9 @@ vector<Position> Pokemon::moveUp(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.y > 0 && map[pos_.y - 1][pos_.x] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.y -= 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -66,7 +68,9 @@ vector<Position> Pokemon::moveDown(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.y + 1 < MAX_Y && map[pos_.y + 1][pos_.x] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.y += 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -75,7 +79,9 @@ vector<Position> Pokemon::moveLeft(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.x > 0 && map[pos_.y][pos_.x - 1] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.x -= 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
@@ -84,7 +90,9 @@ vector<Position> Pokemon::moveRight(vector<vector<Pokemon*>>& map)
 {
 	vector<Position> result;
 	if (pos_.x + 1 < MAX_X && map[pos_.y][pos_.x + 1] == nullptr) {
+		map[pos_.y][pos_.x] = nullptr;
 		pos_.x += 1;
+		map[pos_.y][pos_.x] = this;
 	}
 	return result;
 }
