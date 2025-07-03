@@ -70,7 +70,8 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 	char effect;
 	switch (cardType) {
 	case CardType::ATTACK:
-		effect = 'X';
+		if (userName == "Player") effect = 'X';
+		else effect = '+';
 		break;
 	case CardType::MOVE:
 		system("cls");
@@ -78,6 +79,9 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		cout << "<<<<<<<<< " << userName << ' ' << effectName << " >>>>>>>>>";
 		Sleep(1000);
 		return;
+	case CardType::HEAL:
+		effect = 'H';
+		break;
 	default:
 		effect = '0';
 		break;

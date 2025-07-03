@@ -32,6 +32,11 @@ void Pokemon::takeDamage(int damage)
 	hp_ -= damage;
 }
 
+void Pokemon::takeHeal(int healAmount)
+{
+	hp_ += healAmount;
+}
+
 vector<Position> Pokemon::excuteCard(vector<vector<Pokemon*>>& map, int cardInd)
 {
 	return cards_[cardInd].executeCard(map);

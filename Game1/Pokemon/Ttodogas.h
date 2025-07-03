@@ -28,14 +28,15 @@ public:
 				return this->sludge(map);
 			}));
 
-		cards_.push_back(Card("sludgeBomb",
-			CardType::ATTACK,
+		cards_.push_back(Card("heal",
+			CardType::HEAL,
 			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
-				return this->sludgeBomb(map);
+				return this->heal(map);
 			}));
 	}
 	vector<Position> blech(vector<vector<Pokemon*>> map);
 	vector<Position> clearSmog(vector<vector<Pokemon*>> map);
 	vector<Position> sludge(vector<vector<Pokemon*>> map);
 	vector<Position> sludgeBomb(vector<vector<Pokemon*>> map);
+	vector<Position> heal(vector<vector<Pokemon*>> map);
 };

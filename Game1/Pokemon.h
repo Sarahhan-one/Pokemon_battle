@@ -25,6 +25,7 @@ public:
 	vector<Type> getType() const { return types_; }
 	int getHp() const { return hp_; }
 	int getMaxHp() const { return maxHp_; }
+	void setHp(int hp) { hp_ = hp; }
 	Position getPos() const { return pos_; }
 	void setPos(const Position pos) { pos_ = pos; }
 	vector<Card> getCards() const { return cards_; }
@@ -32,6 +33,7 @@ public:
 
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);
+	virtual void takeHeal(const int healAmount);
 	vector<Position> excuteCard(vector<vector<Pokemon*>>& map, int cardInd);
 	vector<Position> rangeMap(vector<vector<Pokemon*>>& map, vector<int>& range);
 

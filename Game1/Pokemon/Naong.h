@@ -34,11 +34,17 @@ public:
 			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
 				return this->playRough(map);
 			}));
+		cards_.push_back(Card("heal",
+			CardType::HEAL,
+			[this](vector<vector<Pokemon*>>& map) -> vector<Position> {
+				return this->heal(map);
+			}));
 	}
 
 	vector<Position> slash(vector<vector<Pokemon*>> map);
 	vector<Position> scratch(vector<vector<Pokemon*>> map);
 	vector<Position> furySwipes(vector<vector<Pokemon*>> map);
 	vector<Position> playRough(vector<vector<Pokemon*>> map);
+	vector<Position> heal(vector<vector<Pokemon*>> map);
 	
 };
