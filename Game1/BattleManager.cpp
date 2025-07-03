@@ -46,6 +46,7 @@ void BattleManager::executeBattle()
 				Sleep(2000);
 				return; // End battle, GameManager handle next stage
 			}
+			computerPlayer_->getPokemon().setShield(false);
 
 			// Computer's turn
 			tmpPos = computerPlayer_->executeCard(map_, computerCardList[i]);
@@ -57,6 +58,7 @@ void BattleManager::executeBattle()
 				Sleep(2000);
 				return;
 			}
+			humanPlayer_->getPokemon().setShield(false);
 		}
 #else
 		for (int i = 0; i < 3; i++) {
@@ -85,8 +87,6 @@ void BattleManager::executeBattle()
 #endif
 
 	}
-
-
 }
 
 void BattleManager::selectCardsForStage()
@@ -111,7 +111,8 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 	char effect;
 	switch (cardType) {
 	case CardType::ATTACK:
-		effect = 'X';
+		if (userName == "Player") effect = 'X';
+		else effect = '+';
 		break;
 	case CardType::MOVE:
 		system("cls");
@@ -119,6 +120,12 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		cout << "<<<<<<<<< " << userName << ' ' << effectName << " >>>>>>>>>";
 		Sleep(1000);
 		return;
+	case CardType::HEAL:
+		effect = 'H';
+		break;
+	case CardType::SHIELD:
+		effect = 'S';
+		break;
 	default:
 		effect = '0';
 		break;
@@ -141,7 +148,7 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 				curOut = 'P';
 				curOutBlank = curOut;
 			}
-			else if (playerPos.y == y && compPos.x == x) {
+			else if (compPos.y == y && compPos.x == x) {
 				curOut = 'C';
 				curOutBlank = curOut;
 			}
