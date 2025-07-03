@@ -33,6 +33,7 @@ void BattleManager::executeBattle()
 				Sleep(2000);
 				return; // End battle, GameManager handle next stage
 			}
+			computerPlayer_->getPokemon().setShield(false);
 
 			// Computer's turn
 			tmpPos = computerPlayer_->executeCard(map_, computerCardList[i]);
@@ -44,6 +45,7 @@ void BattleManager::executeBattle()
 				Sleep(2000);
 				return;
 			}
+			humanPlayer_->getPokemon().setShield(false);
 		}
 	}
 }
@@ -81,6 +83,9 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		return;
 	case CardType::HEAL:
 		effect = 'H';
+		break;
+	case CardType::SHIELD:
+		effect = 'S';
 		break;
 	default:
 		effect = '0';

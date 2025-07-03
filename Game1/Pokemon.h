@@ -17,6 +17,7 @@ protected:
 	int hp_;
 	Position pos_;
 	string name_;
+	bool shield_;
 
 public:
 	//Pokemon();
@@ -30,6 +31,8 @@ public:
 	void setPos(const Position pos) { pos_ = pos; }
 	vector<Card> getCards() const { return cards_; }
 	virtual string getName() const { return name_; }
+	bool getShield() { return shield_; }
+	void setShield(bool shield) { shield_ = shield; }
 
 	bool isAlive() const;
 	virtual void takeDamage(const int damage);

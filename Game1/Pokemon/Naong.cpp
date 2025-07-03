@@ -144,3 +144,14 @@ vector<Position> Naong::heal(vector<vector<Pokemon*>> map)
     }
     return healRange;
 }
+
+
+vector<Position> Naong::shield(vector<vector<Pokemon*>> map)
+{
+    Pokemon* me = this;
+    vector<int> range = { 5 };
+
+    vector<Position> shieldRange = rangeMap(map, range);
+    me->setShield(true);
+    return shieldRange;
+}

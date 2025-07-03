@@ -143,3 +143,14 @@ vector<Position> Kkobugi::heal(vector<vector<Pokemon*>> map)
     }
     return healRange;
 }
+
+
+vector<Position> Kkobugi::shield(vector<vector<Pokemon*>> map)
+{
+    Pokemon* me = this;
+    vector<int> range = { 5 };
+
+    vector<Position> shieldRange = rangeMap(map, range);
+    me->setShield(true);
+    return shieldRange;
+}

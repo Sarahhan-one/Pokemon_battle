@@ -29,7 +29,12 @@ bool Pokemon::isAlive() const
 
 void Pokemon::takeDamage(int damage)
 {
+	if (shield_) {
+		shield_ = false;
+		return;
+	}
 	hp_ -= damage;
+	if (hp_ < 0) hp_ = 0;
 }
 
 void Pokemon::takeHeal(int healAmount)

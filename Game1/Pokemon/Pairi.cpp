@@ -143,3 +143,14 @@ vector<Position> Pairi::heal(vector<vector<Pokemon*>> map)
     }
     return healRange;
 }
+
+
+vector<Position> Pairi::shield(vector<vector<Pokemon*>> map)
+{
+    Pokemon* me = this;
+    vector<int> range = { 5 };
+
+    vector<Position> shieldRange = rangeMap(map, range);
+    me->setShield(true);
+    return shieldRange;
+}
