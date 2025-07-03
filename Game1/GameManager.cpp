@@ -6,6 +6,7 @@
 #include "Pokemon/Majayong.h"
 #include "Pokemon/Ttodogas.h"
 #include "Tools.h"
+#include <thread>
 
 void GameManager::init()
 {
@@ -166,6 +167,7 @@ void GameManager::main()
 
     while (true) {
         gameManager.update();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
