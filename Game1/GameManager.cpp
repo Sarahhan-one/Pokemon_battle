@@ -110,3 +110,20 @@ void GameManager::selectCharacter()
     battleManager_.setHumanPokemon(playerPokemon);
     battleManager_.setComputerPokemon(opponentPokemon);
 }
+
+void GameManager::main()
+{
+    GameManager gameManager;
+
+    cout << "계속하려면 아무 키나 누르세요...";
+    (void)_getch();
+
+    while (true) {
+        gameManager.update();
+    }
+}
+
+void GameManager::exitGame()
+{
+    exit(0);
+}

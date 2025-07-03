@@ -22,7 +22,6 @@ public:
 	void update();
 	void endBattle();
 	void selectCharacter();
+	void main();
+	void exitGame();
 };
-
-
-
