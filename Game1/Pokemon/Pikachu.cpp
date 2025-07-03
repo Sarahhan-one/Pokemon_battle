@@ -1,26 +1,33 @@
 #include "Pikachu.h"
 
+
 vector<Position> Pikachu::thunderbolt(vector<vector<Pokemon*>>& map)
 {
     int damage = 50;
     vector<int> range = { 2, 4, 5, 6, 8 };
     vector<Position> rangeAttack = rangeMap(map, range);
 
-    for (auto& attackPos : rangeAttack) {
-        // Skip self position
-        if (attackPos.x == pos_.x && attackPos.y == pos_.y)
-            continue;
+    // Find the opponent in the map
+    Pokemon* opponent = nullptr;
+    for (const auto& row : map) {
+        for (Pokemon* p : row) {
+            if (p && p != this) {
+                opponent = p;
+                break;
+            }
+        }
+        if (opponent) break;
+    }
 
-        // Bounds check (defensive, in case rangeMap ever returns out-of-bounds)
-        if (attackPos.y < 0 || attackPos.y >= map.size() ||
-            attackPos.x < 0 || attackPos.x >= map[0].size())
-            continue;
-
-        Pokemon* target = map[attackPos.y][attackPos.x];
-        // Only hit if there is a target and it's not self
-        if (target != nullptr && target != this) {
-            target->takeDamage(damage);
+    if (opponent) {
+        Position oppPos = opponent->getPos();
+        for (const auto& attackPos : rangeAttack) {
+            if (attackPos.x == oppPos.x && attackPos.y == oppPos.y) {
+                opponent->takeDamage(damage);
+                break; // Only hit once
+            }
         }
     }
+
     return rangeAttack;
 }
