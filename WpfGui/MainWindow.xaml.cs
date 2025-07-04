@@ -1,5 +1,6 @@
 ﻿#define DEBUG  
 using CppCliWrapper;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -12,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace Demon_battle
 {
@@ -49,7 +53,7 @@ namespace Demon_battle
             game.EndGame();    // C++ EndGame() 호출
         }
 
-        public static void ShowImages(List<List<string>> paths)
+        public static void ShowImages(List<List<string>> paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp)
         {
 
             // 스레드 충돌 나서 추가한 부분
@@ -57,12 +61,22 @@ namespace Demon_battle
             { 
                 var window = (MainWindow)Application.Current.MainWindow;
 
+                //update image grid
                 window.ImageGrid.Children.Clear();
                 window.ImageGrid.RowDefinitions.Clear();
                 window.ImageGrid.ColumnDefinitions.Clear();
 
+                //UI visibility 
                 window.ControlPanel.Visibility = Visibility.Collapsed;
                 window.GamePanel.Visibility = Visibility.Visible;
+
+                //update HP Bars
+                window.playerHpBar.Maximum = playerMaxHp;
+                window.computerHpBar.Maximum = computerMaxHp;
+                window.playerHpBar.Value = playerCurrentHp;
+                window.computerHpBar.Value = computerCurrentHp;
+                window.playerHpText.Text = $"{playerCurrentHp} / {playerMaxHp}";
+                window.computerHpText.Text = $"{computerCurrentHp} / {computerMaxHp}";
 
                 int rowCount = paths.Count;
                 int colCount = paths[0].Count;
@@ -93,6 +107,7 @@ namespace Demon_battle
                         }
                         else
                         {
+                            string fullPath = System.IO.Path.GetFullPath(path);
                             if (!File.Exists(path))
                             {
                                 Debug.WriteLine($"[ERROR] 파일이 존재하지 않습니다: {path}");
@@ -103,7 +118,7 @@ namespace Demon_battle
                             var bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;  // 캐시 무시
-                            bitmap.UriSource = new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute);
+                            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
                             bitmap.EndInit();
 
                             // 새 Image 객체 생성
@@ -139,6 +154,7 @@ namespace Demon_battle
                         }
                     }
                 }
+                
             });
         }
     }

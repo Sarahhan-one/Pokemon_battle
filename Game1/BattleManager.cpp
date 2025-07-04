@@ -191,21 +191,13 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 
 void BattleManager::printMap(vector<vector<char>> effectMap)
 {
-	drawWpfMap();
-	int playerHp = humanPlayer_->getPokemon().getHp();
-	int computerHp = computerPlayer_->getPokemon().getHp();
-	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
-	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
-
-	cout << humanPlayer_->getPokemon().getName() << " HP: " << playerHp << " / " << playerMaxHp << "\n";
-	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
-
 	for (int y = 0; y < MAX_Y; y++) {
 		for (int x = 0; x < MAX_X; x++) {
 			cout << effectMap[y][x] << ' ';
 		}
 		cout << '\n';
 	}
+	//drawWpfMap();
 }
 
 void BattleManager::drawWpfMap()
@@ -224,19 +216,28 @@ void BattleManager::drawWpfMap()
 			
 
 			paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
-			cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
+			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}
 	}
 
-	CallDrawWpfMapFromNative(paths);
+	int playerHp = humanPlayer_->getPokemon().getHp();
+	int computerHp = computerPlayer_->getPokemon().getHp();
+	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
+	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
+
+	cout << humanPlayer_->getPokemon().getName() << " HP: " << playerHp << " / " << playerMaxHp << "\n";
+	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
+
+
+	CallDrawWpfMapFromNative(paths, playerHp, playerMaxHp, computerHp, computerMaxHp);
 }
 
 void BattleManager::printMap()
 {
 	Position playerPosTmp = humanPlayer_->getPokemon().getPos();
 	Position compPosTmp = computerPlayer_->getPokemon().getPos();
-	cout << "player Y: " << playerPosTmp.y << " Player X: " << playerPosTmp.x << endl;
-	cout << "comp Y: " << compPosTmp.y << " comp X: " << compPosTmp.x << endl;
+	//cout << "player Y: " << playerPosTmp.y << " Player X: " << playerPosTmp.x << endl;
+	//cout << "comp Y: " << compPosTmp.y << " comp X: " << compPosTmp.x << endl;
 	//cout << "Map [1][0]: " << typeid(*map_[1][0]).name() << endl;
 	//cout << "Map [1][2]: " << typeid(*map_[1][2]).name() << endl;
 	drawWpfMap();

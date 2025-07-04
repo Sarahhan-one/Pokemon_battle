@@ -7,13 +7,20 @@
 using namespace CppCliWrapper;
 using namespace System::Runtime::InteropServices;
 
-
-void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths)
+void CallDrawWpfMapFromNative(
+    const std::vector<std::vector<std::string>>& paths, 
+    int playerCurrentHp,
+    int playerMaxHp,
+    int computerCurrentHp,
+    int computerMaxHp)
 {
-    CppCliWrapper::Wrapper::CallManagedShowImages(paths);
+    CppCliWrapper::Wrapper::CallManagedShowImages(
+        paths,
+        playerCurrentHp,
+        playerMaxHp,
+        computerCurrentHp,
+        computerMaxHp);
 }
-
-// ShowImagesCallback^ Wrapper::imageCallback = nullptr;
 
 CppCliWrapper::Wrapper::Wrapper() {
 	gameManager = new GameManager();
@@ -36,7 +43,13 @@ void CppCliWrapper::Wrapper::RegisterImageCallback(ShowImagesCallback^ cb)
     imageCallback = cb;
 }
 
-void CppCliWrapper::Wrapper::CallManagedShowImages(const std::vector<std::vector<std::string>>& paths)
+void CppCliWrapper::Wrapper::CallManagedShowImages(
+    const std::vector<std::vector<std::string>>& paths,
+    int playerCurrentHp,
+    int playerMaxHp,
+    int computerCurrentHp,
+    int computerMaxHp
+)
 {
     if (imageCallback == nullptr) return;
 
@@ -49,5 +62,10 @@ void CppCliWrapper::Wrapper::CallManagedShowImages(const std::vector<std::vector
         managedList->Add(managedRow);
     }
 
-    imageCallback(managedList);
+    imageCallback(
+        managedList,
+        playerCurrentHp,
+        playerMaxHp,
+        computerCurrentHp,
+        computerMaxHp);
 }
