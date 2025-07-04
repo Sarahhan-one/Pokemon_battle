@@ -2,7 +2,7 @@
 
 vector<Position> Kkobugi::waveCrash(vector<vector<Pokemon*>> map)
 {
-    int damage = 15;
+    int damage = 50;
     vector<int> range = { 4, 6 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -33,7 +33,7 @@ vector<Position> Kkobugi::waveCrash(vector<vector<Pokemon*>> map)
 
 vector<Position> Kkobugi::hydroPump(vector<vector<Pokemon*>> map)
 {
-    int damage = 10;
+    int damage = 40;
     vector<int> range = { 1, 2, 3, 7, 8, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -65,7 +65,7 @@ vector<Position> Kkobugi::hydroPump(vector<vector<Pokemon*>> map)
 
 vector<Position> Kkobugi::waterGun(vector<vector<Pokemon*>> map)
 {
-    int damage = 10;
+    int damage = 40;
     vector<int> range = { 1, 3, 4, 6, 7, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -97,7 +97,7 @@ vector<Position> Kkobugi::waterGun(vector<vector<Pokemon*>> map)
 
 vector<Position> Kkobugi::tailWhip(vector<vector<Pokemon*>> map)
 {
-    int damage = 10;
+    int damage = 25;
     vector<int> range = { 2, 8 };
 
     vector<Position> rangeAttack = rangeMap(map, range);

@@ -3,7 +3,7 @@
 
 vector<Position> Pairi::flameThrower(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 1, 3, 5 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -35,7 +35,7 @@ vector<Position> Pairi::flameThrower(vector<vector<Pokemon*>> map)
 
 vector<Position> Pairi::fireBlast(vector<vector<Pokemon*>> map)
 {
-    int damage = 5;
+    int damage = 20;
     vector<int> range = { 1, 2, 3, 4, 6, 7, 8, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -67,7 +67,7 @@ vector<Position> Pairi::fireBlast(vector<vector<Pokemon*>> map)
 
 vector<Position> Pairi::ember(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 4, 6 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -98,7 +98,7 @@ vector<Position> Pairi::ember(vector<vector<Pokemon*>> map)
 
 vector<Position> Pairi::heatWave(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 2, 4, 6, 8 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -129,7 +129,7 @@ vector<Position> Pairi::heatWave(vector<vector<Pokemon*>> map)
 
 vector<Position> Pairi::heal(vector<vector<Pokemon*>> map)
 {
-    int healAmount = 20;
+    int healAmount = 40;
     vector<int> range = { 5 };
 
     vector<Position> healRange = rangeMap(map, range);

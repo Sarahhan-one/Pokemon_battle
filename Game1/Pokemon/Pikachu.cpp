@@ -2,7 +2,7 @@
 
 vector<Position> Pikachu::thunderbolt(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 2,5, 8 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -33,7 +33,7 @@ vector<Position> Pikachu::thunderbolt(vector<vector<Pokemon*>> map)
 
 vector<Position> Pikachu::disCharge(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 7, 5, 8, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -64,7 +64,7 @@ vector<Position> Pikachu::disCharge(vector<vector<Pokemon*>> map)
 
 vector<Position> Pikachu::electricBall(vector<vector<Pokemon*>> map)
 {
-    int damage = 10;
+    int damage = 20;
     vector<int> range = { 1, 2, 3, 5 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
@@ -95,7 +95,7 @@ vector<Position> Pikachu::electricBall(vector<vector<Pokemon*>> map)
 
 vector<Position> Pikachu::spark(vector<vector<Pokemon*>> map)
 {
-    int damage = 20;
+    int damage = 40;
     vector<int> range = { 1, 3, 5, 7, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
