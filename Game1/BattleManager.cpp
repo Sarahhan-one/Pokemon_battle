@@ -131,6 +131,7 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		break;
 	}
 
+	// 원하시는 대로 지우셔도댐
 	if (poss.size() == 0) {
 		return;
 	}

@@ -36,15 +36,11 @@ namespace Demon_battle
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
-            ControlPanel.Visibility = Visibility.Collapsed;
-            GamePanel.Visibility = Visibility.Visible;
-
             // 게임 시작을 백그라운드 쓰레드로 실행
             Task.Run(() =>
             {
                 game.StartGame(); // native C++ 게임 루프
             });
-            //game.StartGame();  // C++ StartGame() 호출
         }
 
         private void EndGame_Click(object sender, RoutedEventArgs e)
@@ -55,6 +51,7 @@ namespace Demon_battle
         public static void ShowImages(List<List<string>> paths)
         {
 
+            // 스레드 충돌 나서 추가한 부분
             Application.Current.Dispatcher.Invoke(() =>
             { 
                 var window = (MainWindow)Application.Current.MainWindow;
