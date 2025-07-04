@@ -1,6 +1,8 @@
 ﻿#define DEBUG  
 using CppCliWrapper;
 using System.Diagnostics;
+using System.IO;
+using System.Media;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO;
 
 namespace Demon_battle
 {
@@ -24,7 +25,9 @@ namespace Demon_battle
         public MainWindow()
         {
             InitializeComponent();
-            game = new Wrapper();
+            game = new Wrapper(); 
+            SoundPlayer player = new SoundPlayer("../../../../Sound/background.wav");
+            player.Play();
 
             //List<List<string>> paths = new List<List<string>>();
             //paths.Add(new List<string> { "../../../../Image/Pairi.png", "../../../../Image/Kkobugi.png" });
@@ -68,10 +71,10 @@ namespace Demon_battle
                 int colCount = paths[0].Count;
 
                 for (int r = 0; r < rowCount; r++)
-                    window.ImageGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(250) });
+                    window.ImageGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(200) });
 
                 for (int c = 0; c < colCount; c++)
-                    window.ImageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(250) });
+                    window.ImageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200) });
 
                 for (int r = 0; r < rowCount; r++)
                 {
