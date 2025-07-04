@@ -7,12 +7,14 @@ using namespace System;
 using namespace System::Collections::Generic;
 
 public delegate void ShowImagesCallback(List<List<String^>^>^ paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp, String^ sound_path);
+public delegate void ShowAvailableCardsCallback(List<String^>^ availableCardNames);
 
 namespace CppCliWrapper {
 	public ref class Wrapper {
 	private:
 		GameManager* gameManager;
 		static ShowImagesCallback^ imageCallback;
+		static ShowAvailableCardsCallback^ availableCardsCallback;
 	public:
 		Wrapper();
 		~Wrapper();
@@ -20,6 +22,7 @@ namespace CppCliWrapper {
 		void EndGame();
 
 		static void RegisterImageCallback(ShowImagesCallback^ cb);
+		static void RegisterAvailableCardsCallback(ShowAvailableCardsCallback^ cb);
 		static void CallManagedShowImages(
 			const std::vector<std::vector<std::string>>& paths,
 			int playerCurrentHp,
@@ -28,5 +31,6 @@ namespace CppCliWrapper {
 			int computerMaxHp,
 			System::String^ sound_path
 		);
+		static void CallManagedShowAvailableCards(const std::vector<std::string>& availableCardNames);
 	};
 }

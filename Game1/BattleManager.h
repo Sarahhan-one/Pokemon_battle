@@ -7,6 +7,7 @@ extern void CallDrawWpfMapFromNative(
 	const std::vector<std::vector<std::string>>& paths,
 	int playerCurrentHp, int playerMaxHp,
 	int computerCurrentHp, int computerMaxHp, string sound_path);
+extern void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames);
 
 enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
 

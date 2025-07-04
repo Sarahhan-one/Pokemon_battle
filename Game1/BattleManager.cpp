@@ -96,6 +96,14 @@ void BattleManager::executeBattle()
 
 void BattleManager::selectCardsForStage()
 {
+	//Collect all available cards
+	const auto& allHumanCards = humanPlayer_->getPokemon().getCards();
+	std::vector<std::string> allAvailableCardNames;
+	for (const auto& card : allHumanCards) {
+		allAvailableCardNames.push_back(card.getName());
+	}
+
+	CallShowAvailableCardsFromNative(allAvailableCardNames);
 	humanCardList_ = humanPlayer_->selectCardsForStage();
 	computerCardList = computerPlayer_->selectCardsForStage();
 }

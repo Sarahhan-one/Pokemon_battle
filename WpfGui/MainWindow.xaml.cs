@@ -41,6 +41,7 @@ namespace Demon_battle
 
             // Register C# function to be called from C++
             Wrapper.RegisterImageCallback(ShowImages);
+            Wrapper.RegisterAvailableCardsCallback(ShowAvailableCards);
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
@@ -167,6 +168,18 @@ namespace Demon_battle
                         }
                     }
                 }
+            });
+        }
+        public static void ShowAvailableCards(List<string> availableCardNames)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var window = (MainWindow)Application.Current.MainWindow;
+
+                window.GamePanel.Visibility = Visibility.Visible;
+                window.AvailableCardsPanel.Visibility = Visibility.Visible;
+
+                window.availableCardsList.ItemsSource = availableCardNames;
             });
         }
     }

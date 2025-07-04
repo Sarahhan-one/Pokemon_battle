@@ -5,21 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demon_battle"
         mc:Ignorable="d"
-        Title="Demon Battle" Height="700" Width="1000">
+        Title="Demon Battle" Height="900" Width="1000">
+
     <Grid>
+        <!-- 시작 화면 -->
         <StackPanel x:Name="ControlPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Demon Battle" FontSize="48" Margin="0,0,0,50"/>
             <Button Content="Start Game" Width="200" Height="50" FontSize="24" Click="StartGame_Click"/>
             <Button Content="End Game" Width="200" Height="50" FontSize="24" Margin="0,20,0,0" Click="EndGame_Click"/>
         </StackPanel>
 
+        <!-- 게임 패널 -->
         <Grid x:Name="GamePanel" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <!-- HP -->
                 <RowDefinition Height="*"/>
+                <!-- Image Grid -->
                 <RowDefinition Height="Auto"/>
+                <!-- Card Panel -->
             </Grid.RowDefinitions>
 
+            <!-- HP 영역 -->
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <StackPanel Orientation="Vertical" Margin="0,0,50,0">
                     <TextBlock Text="Player HP" FontWeight="Bold" HorizontalAlignment="Center"/>
@@ -34,10 +41,32 @@
                 </StackPanel>
             </StackPanel>
 
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <Grid x:Name="ImageGrid" Margin="10"/>
+            <!-- 이미지 그리드 (스크롤 포함) -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Grid x:Name="ImageGrid"
+                  Margin="10"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
             </ScrollViewer>
 
+            <!-- 사용 가능한 카드 목록 -->
+            <StackPanel x:Name="AvailableCardsPanel" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="10" Visibility="Collapsed">
+                <TextBlock Text="Available Cards:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                <ItemsControl x:Name="availableCardsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Width="120" Height="80" Margin="5" Background="LightYellow">
+                                <TextBlock Text="{Binding}" FontSize="14" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
