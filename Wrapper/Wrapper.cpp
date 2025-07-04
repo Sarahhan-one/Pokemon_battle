@@ -22,6 +22,12 @@ void CallDrawWpfMapFromNative(
         computerMaxHp);
 }
 
+void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames)
+{
+    CppCliWrapper::Wrapper::CallManagedShowAvailableCards(availableCardNames);
+}
+
+
 CppCliWrapper::Wrapper::Wrapper() {
 	gameManager = new GameManager();
 }
@@ -41,6 +47,10 @@ void CppCliWrapper::Wrapper::EndGame() {
 void CppCliWrapper::Wrapper::RegisterImageCallback(ShowImagesCallback^ cb)
 {
     imageCallback = cb;
+}
+
+void CppCliWrapper::Wrapper::RegisterAvailableCardsCallback(ShowAvailableCardsCallback^ cb) {
+    availableCardsCallback = cb;
 }
 
 void CppCliWrapper::Wrapper::CallManagedShowImages(
@@ -68,4 +78,15 @@ void CppCliWrapper::Wrapper::CallManagedShowImages(
         playerMaxHp,
         computerCurrentHp,
         computerMaxHp);
+}
+
+void Wrapper::CallManagedShowAvailableCards(const vector<string>& availableCardNames) {
+    if (availableCardsCallback == nullptr) return;
+
+    auto managedAvailableCardList = gcnew List<String^>();
+    for (const auto& s : availableCardNames) {
+        managedAvailableCardList->Add(gcnew String(s.c_str()));
+    }
+
+    availableCardsCallback(managedAvailableCardList);
 }

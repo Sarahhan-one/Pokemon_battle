@@ -1,11 +1,15 @@
 #pragma once
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
+#include "Player.h"
 
 extern void CallDrawWpfMapFromNative(
 	const std::vector<std::vector<std::string>>& paths,
 	int playerCurrentHp, int playerMaxHp,
 	int computerCurrentHp, int computerMaxHp);
+
+extern void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames);
+
 
 enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
 

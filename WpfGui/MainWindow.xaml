@@ -35,7 +35,25 @@
             </StackPanel>
 
             <Grid x:Name="ImageGrid" Grid.Row="1" Margin="10"/>
-
+            
+            <StackPanel x:Name="AvailableCardsPanel" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="10" Visibility="Collapsed">
+                <TextBlock Text="Available Cards:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                <ItemsControl x:Name="availableCardsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Width="120" Height="80" Margin="5" Background="LightYellow">
+                                <TextBlock Text="{Binding}" FontSize="14" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            
         </Grid>
     </Grid>
 </Window>
