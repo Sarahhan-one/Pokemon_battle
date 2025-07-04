@@ -32,7 +32,7 @@ namespace Demon_battle
             InitializeComponent();
             game = new Wrapper(); 
             player = new SoundPlayer("../../../../Sound/background.wav");
-            player.Play();
+            player.PlayLooping();
 
             //List<List<string>> paths = new List<List<string>>();
             //paths.Add(new List<string> { "../../../../Image/Pairi.png", "../../../../Image/Kkobugi.png" });
@@ -47,7 +47,6 @@ namespace Demon_battle
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
 
-            player.Stop();
             // 게임 시작을 백그라운드 쓰레드로 실행
             Task.Run(() =>
             {
