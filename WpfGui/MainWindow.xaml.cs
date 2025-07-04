@@ -1,4 +1,5 @@
-﻿using CppCliWrapper;
+﻿#define DEBUG  
+using CppCliWrapper;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -98,14 +99,43 @@ namespace Demon_battle
                                 continue;
                             }
 
+                            // 이미지 불러오기 (캐시 무시)
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;  // 캐시 무시
+                            bitmap.UriSource = new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute);
+                            bitmap.EndInit();
+
+                            // 새 Image 객체 생성
                             var image = new Image
                             {
-                                Source = new BitmapImage(new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute)),
+                                Source = bitmap,
                                 Stretch = Stretch.Uniform
                             };
+
+                            // 강제 렌더링 트릭
+                            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.NearestNeighbor);
+                            //RenderOptions.SetCachingHint(image, CachingHint.Uncache);
+
+#if DEBUG
+                            // Grid에 삽입
                             Grid.SetRow(image, r);
                             Grid.SetColumn(image, c);
                             window.ImageGrid.Children.Add(image);
+
+                            var label = new TextBlock
+                            {
+                                Text = $"{r},{c}",
+                                Foreground = Brushes.Red,
+                                FontSize = 10,
+                                VerticalAlignment = VerticalAlignment.Top,
+                                HorizontalAlignment = HorizontalAlignment.Left
+                            };
+                            Grid.SetRow(label, r);
+                            Grid.SetColumn(label, c);
+                            window.ImageGrid.Children.Add(label);
+#endif
+
                         }
                     }
                 }

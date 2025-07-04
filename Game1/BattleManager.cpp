@@ -191,6 +191,7 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 
 void BattleManager::printMap(vector<vector<char>> effectMap)
 {
+	drawWpfMap();
 	int playerHp = humanPlayer_->getPokemon().getHp();
 	int computerHp = computerPlayer_->getPokemon().getHp();
 	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
@@ -221,7 +222,9 @@ void BattleManager::drawWpfMap()
 			
 			string className = typeid(*map_[y][x]).name();
 			
+
 			paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
+			cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}
 	}
 
@@ -230,6 +233,12 @@ void BattleManager::drawWpfMap()
 
 void BattleManager::printMap()
 {
+	Position playerPosTmp = humanPlayer_->getPokemon().getPos();
+	Position compPosTmp = computerPlayer_->getPokemon().getPos();
+	cout << "player Y: " << playerPosTmp.y << " Player X: " << playerPosTmp.x << endl;
+	cout << "comp Y: " << compPosTmp.y << " comp X: " << compPosTmp.x << endl;
+	//cout << "Map [1][0]: " << typeid(*map_[1][0]).name() << endl;
+	//cout << "Map [1][2]: " << typeid(*map_[1][2]).name() << endl;
 	drawWpfMap();
 	int playerHp = humanPlayer_->getPokemon().getHp();
 	int computerHp = computerPlayer_->getPokemon().getHp();

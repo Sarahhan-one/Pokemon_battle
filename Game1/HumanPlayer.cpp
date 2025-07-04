@@ -31,7 +31,7 @@ vector<int> HumanPlayer::selectCardsForStage()
 	return selectedCardInds;
 }
 
-vector<Position> HumanPlayer::executeCard(vector<vector<Pokemon*>> map, int cardInd)
+vector<Position> HumanPlayer::executeCard(vector<vector<Pokemon*>>& map, int cardInd)
 {
 	Card card = pokemon_->getCards()[cardInd];
 	return card.executeCard(map);

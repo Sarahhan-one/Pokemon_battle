@@ -10,6 +10,6 @@ public:
 	HumanPlayer(string name) : Player(name) {}
 
 	vector<int> selectCardsForStage() override;
-	vector<Position> executeCard(vector<vector<Pokemon*>> map, int cardInd) override;
+	vector<Position> executeCard(vector<vector<Pokemon*>>& map, int cardInd);
 };
 
