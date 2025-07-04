@@ -35,7 +35,7 @@ vector<Position> Ttodogas::blech(vector<vector<Pokemon*>> map)
 vector<Position> Ttodogas::clearSmog(vector<vector<Pokemon*>> map)
 {
     int damage = 20;
-    vector<int> range = { 4, 5, 6, 7, 8, 9 };
+    vector<int> range = { 4, 6, 7, 8, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
@@ -66,7 +66,7 @@ vector<Position> Ttodogas::clearSmog(vector<vector<Pokemon*>> map)
 vector<Position> Ttodogas::sludge(vector<vector<Pokemon*>> map)
 {
     int damage = 20;
-    vector<int> range = { 2, 4, 5, 6, 8 };
+    vector<int> range = { 2, 4, 6, 8 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
@@ -97,7 +97,7 @@ vector<Position> Ttodogas::sludge(vector<vector<Pokemon*>> map)
 vector<Position> Ttodogas::sludgeBomb(vector<vector<Pokemon*>> map)
 {
     int damage = 20;
-    vector<int> range = { 1, 3, 5, 7, 9 };
+    vector<int> range = { 1, 3, 7, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 

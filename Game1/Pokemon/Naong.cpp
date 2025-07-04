@@ -4,7 +4,7 @@
 vector<Position> Naong::slash(vector<vector<Pokemon*>> map)
 {
     int damage = 15;
-    vector<int> range = { 4, 5, 6 };
+    vector<int> range = { 4, 6 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
@@ -36,7 +36,7 @@ vector<Position> Naong::slash(vector<vector<Pokemon*>> map)
 vector<Position> Naong::scratch(vector<vector<Pokemon*>> map)
 {
     int damage = 15;
-    vector<int> range = { 5, 7, 8, 9 };
+    vector<int> range = { 7, 8, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
@@ -68,7 +68,7 @@ vector<Position> Naong::scratch(vector<vector<Pokemon*>> map)
 vector<Position> Naong::playRough(vector<vector<Pokemon*>> map)
 {
     int damage = 15;
-    vector<int> range = { 2, 4, 5, 6 };
+    vector<int> range = { 2, 4, 6 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 
@@ -100,7 +100,7 @@ vector<Position> Naong::playRough(vector<vector<Pokemon*>> map)
 vector<Position> Naong::furySwipes(vector<vector<Pokemon*>> map)
 {
     int damage = 15;
-    vector<int> range = { 1, 3, 4, 5, 6, 7, 9 };
+    vector<int> range = { 1, 3, 4, 6, 7, 9 };
 
     vector<Position> rangeAttack = rangeMap(map, range);
 

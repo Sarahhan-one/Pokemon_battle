@@ -43,8 +43,8 @@ public:
 	void printMap();
 	void printMap(vector<vector<char>> effectMap);
 
-	void drawWpfMap();
-
+	void drawWpfMap(); 
+	void drawWpfMap(vector<vector<char>> effectMap, CardType cardType, string userName);
 	void setHumanPokemon(Pokemon* const pokemon) { humanPlayer_->selectPokemon(pokemon); }
 	void setComputerPokemon(Pokemon* const pokemon) { computerPlayer_->selectPokemon(pokemon); }
 	BattleResult getLastResult() const { return lastResult_; }

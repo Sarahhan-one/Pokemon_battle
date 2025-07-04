@@ -107,6 +107,7 @@ void BattleManager::setIsBattleEnd(bool isBattleEnd)
 
 void BattleManager::showEffect(vector<Position> poss, CardType cardType, string effectName, string userName)
 {
+	vector<vector<string>> paths = vector<vector<string>>(MAX_Y, vector<string>(MAX_X));
 
 	char effect;
 	switch (cardType) {
@@ -121,10 +122,16 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		Sleep(1000);
 		return;
 	case CardType::HEAL:
-		effect = 'H';
+		if (userName == "Player")
+			effect = 'H';
+		else
+			effect = 'h';
 		break;
 	case CardType::SHIELD:
-		effect = 'S';
+		if (userName == "Player")
+			effect = 'S';
+		else
+			effect = 's';
 		break;
 	default:
 		effect = '0';
@@ -173,17 +180,21 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		}
 	}
 
-	for (int i = 0; i < 3; i++) {
+	Pokemon playerPokemon = humanPlayer_->getPokemon();
+	Pokemon compPokemon = computerPlayer_->getPokemon();
 
-		system("cls");
-		printMap(effectMap);
-		cout << "!!!!!!! " << userName << ' ' << effectName << "!!!!!!! \n";
-		Sleep(500);
-		system("cls");
-		printMap(effectMapBlank);
-		cout << "!!!!!!! " << userName << ' ' << effectName << "!!!!!!! \n";
-		Sleep(500);
-	}
+	
+	system("cls");
+	printMap(effectMap);
+	drawWpfMap(effectMap, cardType, userName);
+	cout << "!!!!!!! " << userName << ' ' << effectName << "!!!!!!! \n";
+
+	Sleep(3000);
+	system("cls");
+	printMap(effectMapBlank);
+	cout << "!!!!!!! " << userName << ' ' << effectName << "!!!!!!! \n";
+	Sleep(500);
+
 
 	system("cls");
 	printMap();
@@ -208,6 +219,76 @@ void BattleManager::printMap(vector<vector<char>> effectMap)
 	}
 }
 
+void BattleManager::drawWpfMap(vector<vector<char>> effectMap, CardType cardType, string userName) {
+	//effect type -> player, coomputer, heal, shield, etc...
+
+	vector<vector<string>> paths = vector<vector<string>>(MAX_Y, vector<string>(MAX_X));
+
+	Pokemon playerPokemon = humanPlayer_->getPokemon();
+	Pokemon compPokemon = computerPlayer_->getPokemon();
+
+	for (int y = 0; y < MAX_Y; y++) {
+		for (int x = 0; x < MAX_X; x++) {
+
+			if (map_[y][x] == nullptr) {
+				if (effectMap[y][x] == 'X') {
+					paths[y][x] = "../../../../Image/" + playerPokemon.getName() +"_Effect" + ".png";
+				}
+				else if (effectMap[y][x] == '+') {
+					paths[y][x] = "../../../../Image/" + compPokemon.getName() + "_Effect" + ".png";
+				}
+				else {
+					paths[y][x] = "";
+				}
+				continue;
+			}
+			else {
+				string className = typeid(*map_[y][x]).name();
+				string seat = className.substr(6);
+				if ((effectMap[y][x] == 'X') && (seat != playerPokemon.getName())) {
+					if (compPokemon.getShield() == true) 
+						paths[y][x] = "../../../../Image/" + compPokemon.getName() + "_Shield" + ".png";
+					else 
+						paths[y][x] = "../../../../Image/" + compPokemon.getName() + "_Attacked" + ".png";
+				}
+				else if ((effectMap[y][x] == '+') &&(seat != compPokemon.getName())) {
+					if (playerPokemon.getShield() == true)
+						paths[y][x] = "../../../../Image/" + playerPokemon.getName() + "_Shield" + ".png";
+					else 
+						paths[y][x] = "../../../../Image/" + playerPokemon.getName() + "_Attacked" + ".png";
+				}
+				else if (effectMap[y][x] == 'H'){
+					paths[y][x] = "../../../../Image/" + playerPokemon.getName() + "_Heal" + ".png";
+				}
+				else if (effectMap[y][x] == 'h') {
+					paths[y][x] = "../../../../Image/" + compPokemon.getName() + "_Heal" + ".png";
+				}
+				else if (effectMap[y][x] == 'S') {
+					paths[y][x] = "../../../../Image/" + playerPokemon.getName() + "_Shield" + ".png";
+				}
+				else if (effectMap[y][x] == 's') {
+					paths[y][x] = "../../../../Image/" + compPokemon.getName() + "_Shield" + ".png";
+				}
+				else {
+					if ((cardType == CardType::ATTACK) && (userName == "Player") && (map_[y][x]->getName() == playerPokemon.getName()))
+						paths[y][x] = "../../../../Image/" + seat + "_Attack" + ".png";
+					else if ((cardType == CardType::ATTACK) && (userName == "Computer") && (map_[y][x]->getName() == compPokemon.getName()))
+						paths[y][x] = "../../../../Image/" + seat + "_Attack" + ".png";
+					else 
+						paths[y][x] = "../../../../Image/" + seat + ".png";
+					
+				}
+				//string className = typeid(*map_[y][x]).name();
+				//paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
+			}
+
+			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
+		}
+	}
+
+	CallDrawWpfMapFromNative(paths);
+}
+
 void BattleManager::drawWpfMap()
 {
 	vector<vector<string>> paths = vector<vector<string>>(MAX_Y, vector<string>(MAX_X));
@@ -219,12 +300,15 @@ void BattleManager::drawWpfMap()
 				paths[y][x] = "";
 				continue;
 			}
+			else {
+
+			}
 			
 			string className = typeid(*map_[y][x]).name();
 			
 
 			paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
-			cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
+			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}
 	}
 
@@ -233,12 +317,6 @@ void BattleManager::drawWpfMap()
 
 void BattleManager::printMap()
 {
-	Position playerPosTmp = humanPlayer_->getPokemon().getPos();
-	Position compPosTmp = computerPlayer_->getPokemon().getPos();
-	cout << "player Y: " << playerPosTmp.y << " Player X: " << playerPosTmp.x << endl;
-	cout << "comp Y: " << compPosTmp.y << " comp X: " << compPosTmp.x << endl;
-	//cout << "Map [1][0]: " << typeid(*map_[1][0]).name() << endl;
-	//cout << "Map [1][2]: " << typeid(*map_[1][2]).name() << endl;
 	drawWpfMap();
 	int playerHp = humanPlayer_->getPokemon().getHp();
 	int computerHp = computerPlayer_->getPokemon().getHp();

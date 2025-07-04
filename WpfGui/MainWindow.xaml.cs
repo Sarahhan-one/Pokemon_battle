@@ -68,10 +68,10 @@ namespace Demon_battle
                 int colCount = paths[0].Count;
 
                 for (int r = 0; r < rowCount; r++)
-                    window.ImageGrid.RowDefinitions.Add(new RowDefinition());
+                    window.ImageGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(250) });
 
                 for (int c = 0; c < colCount; c++)
-                    window.ImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                    window.ImageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(250) });
 
                 for (int r = 0; r < rowCount; r++)
                 {
@@ -110,7 +110,11 @@ namespace Demon_battle
                             var image = new Image
                             {
                                 Source = bitmap,
-                                Stretch = Stretch.Uniform
+                                Width = 150,
+                                Height = 150,
+                                Stretch = Stretch.UniformToFill,
+                                HorizontalAlignment = HorizontalAlignment.Center,
+                                VerticalAlignment = VerticalAlignment.Center
                             };
 
                             // 강제 렌더링 트릭
