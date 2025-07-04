@@ -8,9 +8,22 @@ using namespace CppCliWrapper;
 using namespace System::Runtime::InteropServices;
 
 
-void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths)
+void CallDrawWpfMapFromNative(
+    const std::vector<std::vector<std::string>>& paths,
+    int playerCurrentHp,
+    int playerMaxHp,
+    int computerCurrentHp,
+    int computerMaxHp,
+    std::string sound_path)
 {
-    CppCliWrapper::Wrapper::CallManagedShowImages(paths);
+    System::String^ managedSoundPath = gcnew System::String(sound_path.c_str());
+        CppCliWrapper::Wrapper::CallManagedShowImages(
+        paths,
+        playerCurrentHp,
+        playerMaxHp,
+        computerCurrentHp,
+        computerMaxHp, 
+        managedSoundPath);
 }
 
 // ShowImagesCallback^ Wrapper::imageCallback = nullptr;
@@ -36,7 +49,14 @@ void CppCliWrapper::Wrapper::RegisterImageCallback(ShowImagesCallback^ cb)
     imageCallback = cb;
 }
 
-void CppCliWrapper::Wrapper::CallManagedShowImages(const std::vector<std::vector<std::string>>& paths)
+void CppCliWrapper::Wrapper::CallManagedShowImages(
+    const std::vector<std::vector<std::string>>& paths,
+    int playerCurrentHp,
+    int playerMaxHp,
+    int computerCurrentHp,
+    int computerMaxHp,
+    System::String^ sound_path
+)
 {
     if (imageCallback == nullptr) return;
 
@@ -49,5 +69,11 @@ void CppCliWrapper::Wrapper::CallManagedShowImages(const std::vector<std::vector
         managedList->Add(managedRow);
     }
 
-    imageCallback(managedList);
+    imageCallback(
+        managedList,
+        playerCurrentHp,
+        playerMaxHp,
+        computerCurrentHp,
+        computerMaxHp,
+        sound_path);
 }

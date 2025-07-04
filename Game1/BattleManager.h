@@ -2,6 +2,12 @@
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
 
+
+extern void CallDrawWpfMapFromNative(
+	const std::vector<std::vector<std::string>>& paths,
+	int playerCurrentHp, int playerMaxHp,
+	int computerCurrentHp, int computerMaxHp, string sound_path);
+
 enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
 
 enum class ImageName {

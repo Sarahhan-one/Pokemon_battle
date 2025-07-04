@@ -6,7 +6,7 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
-public delegate void ShowImagesCallback(List<List<String^>^>^ paths);
+public delegate void ShowImagesCallback(List<List<String^>^>^ paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp, String^ sound_path);
 
 namespace CppCliWrapper {
 	public ref class Wrapper {
@@ -20,6 +20,13 @@ namespace CppCliWrapper {
 		void EndGame();
 
 		static void RegisterImageCallback(ShowImagesCallback^ cb);
-		static void CallManagedShowImages(const std::vector<std::vector<std::string>>& paths);
+		static void CallManagedShowImages(
+			const std::vector<std::vector<std::string>>& paths,
+			int playerCurrentHp,
+			int playerMaxHp,
+			int computerCurrentHp,
+			int computerMaxHp,
+			System::String^ sound_path
+		);
 	};
 }

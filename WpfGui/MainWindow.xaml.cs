@@ -1,9 +1,13 @@
 ﻿#define DEBUG  
 using CppCliWrapper;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Media;
+using System.Numerics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,11 +26,12 @@ namespace Demon_battle
     public partial class MainWindow : Window
     {
         Wrapper game;
+        static private SoundPlayer player;
         public MainWindow()
         {
             InitializeComponent();
             game = new Wrapper(); 
-            SoundPlayer player = new SoundPlayer("../../../../Sound/background.wav");
+            player = new SoundPlayer("../../../../Sound/background.wav");
             player.Play();
 
             //List<List<string>> paths = new List<List<string>>();
@@ -40,6 +45,8 @@ namespace Demon_battle
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
+
+            player.Stop();
             // 게임 시작을 백그라운드 쓰레드로 실행
             Task.Run(() =>
             {
@@ -52,12 +59,15 @@ namespace Demon_battle
             game.EndGame();    // C++ EndGame() 호출
         }
 
-        public static void ShowImages(List<List<string>> paths)
+        public static void ShowImages(List<List<string>> paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp, string sound_path)
         {
-
             // 스레드 충돌 나서 추가한 부분
             Application.Current.Dispatcher.Invoke(() =>
-            { 
+            {
+                string a = "../../../../Sound/background.wav";
+                bool ais = a == sound_path;
+                player = new SoundPlayer(sound_path);
+                player.Play();
                 var window = (MainWindow)Application.Current.MainWindow;
 
                 window.ImageGrid.Children.Clear();
@@ -66,6 +76,14 @@ namespace Demon_battle
 
                 window.ControlPanel.Visibility = Visibility.Collapsed;
                 window.GamePanel.Visibility = Visibility.Visible;
+
+                //update HP Bars
+                window.playerHpBar.Maximum = playerMaxHp;
+                window.computerHpBar.Maximum = computerMaxHp;
+                window.playerHpBar.Value = playerCurrentHp;
+                window.computerHpBar.Value = computerCurrentHp;
+                window.playerHpText.Text = $"{playerCurrentHp} / {playerMaxHp}";
+                window.computerHpText.Text = $"{computerCurrentHp} / {computerMaxHp}";
 
                 int rowCount = paths.Count;
                 int colCount = paths[0].Count;
@@ -96,6 +114,8 @@ namespace Demon_battle
                         }
                         else
                         {
+
+                            string fullPath = System.IO.Path.GetFullPath(path);
                             if (!File.Exists(path))
                             {
                                 Debug.WriteLine($"[ERROR] 파일이 존재하지 않습니다: {path}");
@@ -106,7 +126,8 @@ namespace Demon_battle
                             var bitmap = new BitmapImage();
                             bitmap.BeginInit();
                             bitmap.CacheOption = BitmapCacheOption.OnLoad;  // 캐시 무시
-                            bitmap.UriSource = new Uri(System.IO.Path.GetFullPath(path), UriKind.Absolute);
+                            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute); 
+                            bitmap.DecodePixelWidth = 100; // 또는 실제 이미지 크기나 ImageControl 크기에 맞춰 조정
                             bitmap.EndInit();
 
                             // 새 Image 객체 생성
@@ -121,7 +142,7 @@ namespace Demon_battle
                             };
 
                             // 강제 렌더링 트릭
-                            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.NearestNeighbor);
+                            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
                             //RenderOptions.SetCachingHint(image, CachingHint.Uncache);
 
 #if DEBUG

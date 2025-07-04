@@ -2,7 +2,12 @@
 
 #define _CONSOLE 1
 
-extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths);
+extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths,
+	int playerCurrentHp,
+	int playerMaxHp,
+	int computerCurrentHp,
+	int computerMaxHp,
+	std::string sound_path);
 
 void BattleManager::init()
 {
@@ -285,8 +290,17 @@ void BattleManager::drawWpfMap(vector<vector<char>> effectMap, CardType cardType
 			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}
 	}
+	int playerHp = humanPlayer_->getPokemon().getHp();
+	int computerHp = computerPlayer_->getPokemon().getHp();
+	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
+	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
 
-	CallDrawWpfMapFromNative(paths);
+	cout << humanPlayer_->getPokemon().getName() << " HP: " << playerHp << " / " << playerMaxHp << "\n";
+	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
+
+
+	CallDrawWpfMapFromNative(paths, playerHp, playerMaxHp, computerHp, computerMaxHp, "../../../../Sound/background.wav");
+	//CallDrawWpfMapFromNative(paths);
 }
 
 void BattleManager::drawWpfMap()
@@ -312,7 +326,17 @@ void BattleManager::drawWpfMap()
 		}
 	}
 
-	CallDrawWpfMapFromNative(paths);
+	//CallDrawWpfMapFromNative(paths);
+	int playerHp = humanPlayer_->getPokemon().getHp();
+	int computerHp = computerPlayer_->getPokemon().getHp();
+	int playerMaxHp = humanPlayer_->getPokemon().getMaxHp();
+	int computerMaxHp = computerPlayer_->getPokemon().getMaxHp();
+
+	cout << humanPlayer_->getPokemon().getName() << " HP: " << playerHp << " / " << playerMaxHp << "\n";
+	cout << computerPlayer_->getPokemon().getName() << " HP: " << computerHp << " / " << computerMaxHp << "\n";
+
+
+	CallDrawWpfMapFromNative(paths, playerHp, playerMaxHp, computerHp, computerMaxHp, "../../../../Sound/background.wav");
 }
 
 void BattleManager::printMap()
