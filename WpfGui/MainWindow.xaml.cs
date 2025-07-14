@@ -27,6 +27,9 @@ namespace Demon_battle
     {
         Wrapper game;
         static private SoundPlayer player;
+        private List<int> selectedCardIndices = new List<int>();
+        private int requiredCardSelections = 3;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -208,6 +211,7 @@ namespace Demon_battle
                 }
             });
         }
+        
         public static void ShowAvailableCards(List<string> availableCardNames)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -217,8 +221,57 @@ namespace Demon_battle
                 window.GamePanel.Visibility = Visibility.Visible;
                 window.AvailableCardsPanel.Visibility = Visibility.Visible;
 
-                window.availableCardsList.ItemsSource = availableCardNames;
+                // Clear previous selections
+                window.selectedCardIndices.Clear();
+                
+                // Display available cards with selection buttons
+                window.availableCardsList.Items.Clear();
+                for (int i = 0; i < availableCardNames.Count; i++)
+                {
+                    var cardPanel = new StackPanel { Orientation = Orientation.Horizontal };
+                    var cardName = new TextBlock { Text = availableCardNames[i], Margin = new Thickness(5), Width = 200 };
+                    var selectButton = new Button { Content = "Select", Tag = i };
+                    selectButton.Click += window.CardSelect_Click;
+                    
+                    cardPanel.Children.Add(cardName);
+                    cardPanel.Children.Add(selectButton);
+                    
+                    window.availableCardsList.Items.Add(cardPanel);
+                }
+                
+                // Show confirmation button
+                window.confirmCardSelection.Visibility = Visibility.Visible;
             });
+        }
+
+        private void CardSelect_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            int cardIndex = (int)button.Tag;
+            
+            // Add to selection if not already selected and we haven't reached the limit
+            if (!selectedCardIndices.Contains(cardIndex) && selectedCardIndices.Count < requiredCardSelections)
+            {
+                selectedCardIndices.Add(cardIndex);
+                button.IsEnabled = false;
+                button.Content = "Selected";
+            }
+            
+            // Enable confirm button if we have enough selections
+            confirmCardSelection.IsEnabled = selectedCardIndices.Count == requiredCardSelections;
+        }
+
+        private void ConfirmCardSelection_Click(object sender, RoutedEventArgs e)
+        {
+            // Submit selected cards back to C++
+            Wrapper.SubmitCardSelections(new List<int>(selectedCardIndices));
+
+            // Hide selection panel
+            AvailableCardsPanel.Visibility = Visibility.Collapsed;
+            confirmCardSelection.Visibility = Visibility.Collapsed;
+            
+            // Reset for next selection
+            selectedCardIndices.Clear();
         }
     }
 }

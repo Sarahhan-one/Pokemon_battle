@@ -3,10 +3,17 @@
 #include "Wrapper.h"
 #include "../Game1/GameManager.h"
 #include "../Game1/BattleManager.h"
+#include <mutex>
+#include <condition_variable>
 
 using namespace CppCliWrapper;
 using namespace System::Runtime::InteropServices;
 
+// Add these globals to handle card selection synchronization
+std::mutex cardSelectionMutex;
+std::condition_variable cardSelectionCV;
+bool cardsSelected = false;
+std::vector<int> selectedCardIndices;
 
 void CallDrawWpfMapFromNative(
     const std::vector<std::vector<std::string>>& paths,
@@ -28,6 +35,21 @@ void CallDrawWpfMapFromNative(
 void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames)
 {
     CppCliWrapper::Wrapper::CallManagedShowAvailableCards(availableCardNames);
+}
+
+// Added function to receive card selections from native code
+std::vector<int> WaitForCardSelections(int numCards)
+{
+    std::unique_lock<std::mutex> lock(cardSelectionMutex);
+    cardsSelected = false;
+    
+    // Wait until the UI thread signals that cards have been selected
+    cardSelectionCV.wait(lock, [] { return cardsSelected; });
+    
+    // Return a copy of the selected indices
+    std::vector<int> result = selectedCardIndices;
+    selectedCardIndices.clear();
+    return result;
 }
 
 // ShowImagesCallback^ Wrapper::imageCallback = nullptr;
@@ -54,6 +76,29 @@ void CppCliWrapper::Wrapper::RegisterImageCallback(ShowImagesCallback^ cb)
 }
 void CppCliWrapper::Wrapper::RegisterAvailableCardsCallback(ShowAvailableCardsCallback^ cb) {
     availableCardsCallback = cb;
+}
+
+// Add a new method to register the card selection callback
+void CppCliWrapper::Wrapper::RegisterCardSelectionCallback(CardSelectionCallback^ cb)
+{
+    cardSelectionCallback = cb;
+}
+
+// Add a method to submit card selections from C# to C++
+void CppCliWrapper::Wrapper::SubmitCardSelections(List<int>^ selectedCards)
+{
+    std::unique_lock<std::mutex> lock(cardSelectionMutex);
+    
+    // Convert managed List to native vector
+    selectedCardIndices.clear();
+    for (int i = 0; i < selectedCards->Count; i++)
+    {
+        selectedCardIndices.push_back(selectedCards[i]);
+    }
+    
+    // Signal that cards have been selected
+    cardsSelected = true;
+    cardSelectionCV.notify_one();
 }
 
 void CppCliWrapper::Wrapper::CallManagedShowImages(

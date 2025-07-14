@@ -5,82 +5,126 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demon_battle"
         mc:Ignorable="d"
-        Title="Demon Battle" Height="900" Width="1000">
-
+        Title="Pokemon Battle" Height="800" Width="1000">
     <Grid>
-        <!-- 시작 화면 -->
-        <StackPanel x:Name="MenuPanel" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Demon Battle" FontSize="48" Margin="0,0,0,20"/>
-            <Button Content="Start Game" Width="150" Height="40" Margin="0,10" Click="MenuStartGame_Click"/>
-            <Button Content="Exit Game" Width="150" Height="40" Margin="0,10" Click="MenuExitGame_Click"/>
-        </StackPanel>
+        <!-- Main Layout -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Grid x:Name="CharacterSelectionPanel" Visibility="Collapsed">
+        <!-- Menu Panel - Initial Screen -->
+        <Grid x:Name="MenuPanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Visible">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Select Character" FontSize="24" Margin="0,0,0,20"/>
-                <UniformGrid Columns="3">
-                    <Button Content="Pikachu" Width="120" Height="150" Margin="10" Click="SelectPikachu_Click">
+                <TextBlock Text="Pokemon Battle" FontSize="48" FontWeight="Bold" Margin="0,0,0,50" HorizontalAlignment="Center"/>
+                <Button x:Name="MenuStartGameButton" Content="Start Game" Width="200" Height="50" Margin="0,10" Click="MenuStartGame_Click"/>
+                <Button x:Name="MenuExitGameButton" Content="Exit Game" Width="200" Height="50" Margin="0,10" Click="MenuExitGame_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Character Selection Panel -->
+        <Grid x:Name="CharacterSelectionPanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Select Your Pokemon" FontSize="36" FontWeight="Bold" Margin="0,0,0,30" HorizontalAlignment="Center"/>
+                <UniformGrid Columns="3" Width="600" Height="300">
+                    <Button x:Name="PikachuButton" Margin="10" Click="SelectPikachu_Click">
+                        <StackPanel>
+                            <TextBlock Text="Pikachu" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
                     </Button>
-                    <Button Content="Kkobugi" Width="120" Height="150" Margin="10" Click="SelectKkobugi_Click">
+                    <Button x:Name="KkobugiButton" Margin="10" Click="SelectKkobugi_Click">
+                        <StackPanel>
+                            <TextBlock Text="Kkobugi" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
                     </Button>
-                    <Button Content="Pairi" Width="120" Height="150" Margin="10" Click="SelectPairi_Click">
+                    <Button x:Name="PairiButton" Margin="10" Click="SelectPairi_Click">
+                        <StackPanel>
+                            <TextBlock Text="Pairi" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                        </StackPanel>
                     </Button>
                 </UniformGrid>
             </StackPanel>
         </Grid>
 
-        <!-- 게임 패널 -->
-        <Grid x:Name="GamePanel" Visibility="Collapsed">
+        <!-- Game Panel -->
+        <Grid x:Name="GamePanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- HP -->
                 <RowDefinition Height="*"/>
-                <!-- Image Grid -->
                 <RowDefinition Height="Auto"/>
-                <!-- Card Panel -->
             </Grid.RowDefinitions>
 
-            <!-- HP 영역 -->
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <StackPanel Orientation="Vertical" Margin="0,0,50,0">
-                    <TextBlock Text="Player HP" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <ProgressBar x:Name="playerHpBar" Width="200" Height="20" Background="LightGray" BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock x:Name="playerHpText" Text="HP: 0 / 0" HorizontalAlignment="Center"/>
+            <!-- Player Information Panel -->
+            <Grid Grid.Row="0" Background="#F0F0F0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Player HP -->
+                <StackPanel Grid.Column="0" Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Player" FontSize="18" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="HP:" VerticalAlignment="Center"/>
+                        <ProgressBar x:Name="playerHpBar" Width="200" Height="20" Margin="5,0,5,0" Maximum="100" Value="100"/>
+                        <TextBlock x:Name="playerHpText" Text="100 / 100" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Computer HP" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <ProgressBar x:Name="computerHpBar" Width="200" Height="20" Background="LightGray" BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock x:Name="computerHpText" Text="HP: 0 / 0" HorizontalAlignment="Center"/>
+                <!-- Computer HP -->
+                <StackPanel Grid.Column="1" Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Computer" FontSize="18" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="HP:" VerticalAlignment="Center"/>
+                        <ProgressBar x:Name="computerHpBar" Width="200" Height="20" Margin="5,0,5,0" Maximum="100" Value="100"/>
+                        <TextBlock x:Name="computerHpText" Text="100 / 100" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
 
-            <!-- 이미지 그리드 (스크롤 포함) -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                <Grid x:Name="ImageGrid"
-                  Margin="10"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"/>
-            </ScrollViewer>
+            <!-- Game Board Grid -->
+            <Grid x:Name="ImageGrid" Grid.Row="1" Margin="10">
+                <!-- Game images are added here dynamically -->
+            </Grid>
+        </Grid>
 
-            <!-- 사용 가능한 카드 목록 -->
-            <StackPanel x:Name="AvailableCardsPanel" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" Margin="10" Visibility="Collapsed">
-                <TextBlock Text="Available Cards:" FontSize="16" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
-                <ItemsControl x:Name="availableCardsList">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" Width="120" Height="80" Margin="5" Background="LightYellow">
-                                <TextBlock Text="{Binding}" FontSize="14" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+        <!-- Available Cards Panel - This overlay shows on top of the game when cards need to be selected -->
+        <Grid x:Name="AvailableCardsPanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed" Background="#BBFFFFFF">
+            <Border Background="White" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" 
+                    Width="500" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Header -->
+                    <TextBlock Grid.Row="0" Text="Select 3 Cards" FontSize="24" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,15,0,5"/>
+                    
+                    <!-- Card List -->
+                    <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="availableCardsList">
+                            <!-- Card items are added here dynamically -->
+                        </ItemsControl>
+                    </ScrollViewer>
+                    
+                    <!-- Confirm Button -->
+                    <Button x:Name="confirmCardSelection" Grid.Row="2"
+                            Content="Confirm Selection" 
+                            Click="ConfirmCardSelection_Click"
+                            Visibility="Visible"
+                            IsEnabled="False"
+                            Width="200" 
+                            Height="40"
+                            Background="#4CAF50"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            Margin="0,10,0,20"
+                            HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
