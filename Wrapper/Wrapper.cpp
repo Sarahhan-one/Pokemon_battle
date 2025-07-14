@@ -41,7 +41,7 @@ CppCliWrapper::Wrapper::~Wrapper() {
 }
 
 void CppCliWrapper::Wrapper::StartGame() {
-	gameManager->main();
+    gameManager->init();
 }
 
 void CppCliWrapper::Wrapper::EndGame() {
@@ -96,8 +96,8 @@ void Wrapper::CallManagedShowAvailableCards(const vector<string>& availableCardN
 }
 
 void Wrapper::SelectCharacter(int characterId) {
-    // Call the GameManager to select character programmatically
     gameManager->SelectCharacterProgrammatically(characterId);
+    gameManager->update();
 }
 
 void Wrapper::ExitGame() {

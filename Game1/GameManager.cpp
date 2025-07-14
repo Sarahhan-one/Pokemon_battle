@@ -205,4 +205,38 @@ void GameManager::SelectCharacterProgrammatically(int characterId)
     // Set up for battle
     gameState_ = GameState::BATTLE;
     startBattle();
+    
+    // Execute the battle directly without waiting for further console input
+    battleManager_.executeBattle();
+    
+    // After battle ends, check the result just like in update()
+    if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
+        gameState_ = GameState::MENU;
+    }
+    else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
+        stageNumber_++; // Advance to next stage
+        if (stageNumber_ > 3) { // FINAL WIN
+            gameState_ = GameState::MENU;
+        }
+        else { // WIN PER STAGE
+            // Restore HP and reset map for next stage
+            // Player's Pokemon stays, only opponent changes
+            Pokemon& playerPokemon = battleManager_.getHumanPlayer()->getPokemon();
+            playerPokemon.setPos(Position(1, 0));
+
+            while (playerPokemon.getHp() < playerPokemon.getMaxHp()) {
+                playerPokemon.takeDamage(-1); // Heal by 1 until full
+            }
+
+            Pokemon* nextOpponent = createOpponentForStage(stageNumber_);
+            nextOpponent->setPos(Position(1, 3));
+            battleManager_.setComputerPokemon(nextOpponent);
+
+            battleManager_.init();
+            gameState_ = GameState::BATTLE;
+            
+            // Continue to next stage's battle
+            battleManager_.executeBattle();
+        }
+    }
 }
