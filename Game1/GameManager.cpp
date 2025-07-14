@@ -162,8 +162,8 @@ void GameManager::main()
 {
     GameManager gameManager;
 
-    cout << "계속하려면 아무 키나 누르세요...";
-    (void)_getch();
+    //cout << "계속하려면 아무 키나 누르세요...";
+    //(void)_getch();
 
     while (true) {
         gameManager.update();
@@ -174,4 +174,35 @@ void GameManager::main()
 void GameManager::exitGame()
 {
     exit(0);
+}
+
+void GameManager::SelectCharacterProgrammatically(int characterId)
+{
+    Pokemon* playerPokemon = nullptr;
+    Pokemon* opponentPokemon = new Naong(Position(1, 3));
+    Position playerStPos = Position(1, 0);
+
+    // Select character based on ID passed from WPF
+    switch (characterId) {
+    case 0:
+        playerPokemon = new Pikachu(playerStPos);
+        break;
+    case 1:
+        playerPokemon = new Kkobugi(playerStPos);
+        break;
+    case 2:
+        playerPokemon = new Pairi(playerStPos);
+        break;
+    default:
+        playerPokemon = new Pikachu(playerStPos); // Default to Pikachu
+        break;
+    }
+
+    // Set the selected Pokemon
+    battleManager_.setHumanPokemon(playerPokemon);
+    battleManager_.setComputerPokemon(opponentPokemon);
+
+    // Set up for battle
+    gameState_ = GameState::BATTLE;
+    startBattle();
 }

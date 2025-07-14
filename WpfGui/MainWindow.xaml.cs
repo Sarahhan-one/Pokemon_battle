@@ -32,16 +32,16 @@ namespace Demon_battle
             InitializeComponent();
             game = new Wrapper(); 
             player = new SoundPlayer("../../../../Sound/background.wav");
-            player.Play();
-
-            //List<List<string>> paths = new List<List<string>>();
-            //paths.Add(new List<string> { "../../../../Image/Pairi.png", "../../../../Image/Kkobugi.png" });
-            //paths.Add(new List<string> { "../../../../Image/Naong.png", "../../../../Image/Pikachu.png" });
-            //ShowImages(paths);
+            player.PlayLooping();
 
             // Register C# function to be called from C++
             Wrapper.RegisterImageCallback(ShowImages);
             Wrapper.RegisterAvailableCardsCallback(ShowAvailableCards);
+            
+            // Show menu panel initially
+            MenuPanel.Visibility = Visibility.Visible;
+            GamePanel.Visibility = Visibility.Collapsed;
+            CharacterSelectionPanel.Visibility = Visibility.Collapsed;
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
@@ -60,6 +60,45 @@ namespace Demon_battle
             game.EndGame();    // C++ EndGame() 호출
         }
 
+        private void MenuStartGame_Click(object sender, RoutedEventArgs e)
+        {
+            MenuPanel.Visibility = Visibility.Collapsed;
+            CharacterSelectionPanel.Visibility = Visibility.Visible;
+        }
+
+        private void MenuExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            game.ExitGame(); // Add this method to your wrapper
+            Application.Current.Shutdown();
+        }
+
+        private void SelectPikachu_Click(object sender, RoutedEventArgs e)
+        {
+            StartGameWithCharacter(0); // 0 = Pikachu
+        }
+
+        private void SelectKkobugi_Click(object sender, RoutedEventArgs e)
+        {
+            StartGameWithCharacter(1); // 1 = Kkobugi
+        }
+
+        private void SelectPairi_Click(object sender, RoutedEventArgs e)
+        {
+            StartGameWithCharacter(2); // 2 = Pairi
+        }
+
+        private void StartGameWithCharacter(int characterId)
+        {
+            CharacterSelectionPanel.Visibility = Visibility.Collapsed;
+            
+            // Start game in background thread with the selected character
+            Task.Run(() =>
+            {
+                game.SelectCharacter(characterId);
+                game.StartGame(); // This will now start with the selected character
+            });
+        }
+
         public static void ShowImages(List<List<string>> paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp, string sound_path)
         {
             // 스레드 충돌 나서 추가한 부분
@@ -75,7 +114,6 @@ namespace Demon_battle
                 window.ImageGrid.RowDefinitions.Clear();
                 window.ImageGrid.ColumnDefinitions.Clear();
 
-                window.ControlPanel.Visibility = Visibility.Collapsed;
                 window.GamePanel.Visibility = Visibility.Visible;
 
                 //update HP Bars

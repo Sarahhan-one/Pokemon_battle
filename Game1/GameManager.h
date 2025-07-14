@@ -20,9 +20,9 @@ public:
 	void menu();
 	void startBattle();
 	void update();
-	void endBattle();
 	void selectCharacter();
 	Pokemon* createOpponentForStage(int stage);
 	void main();
 	void exitGame();
+	void SelectCharacterProgrammatically(int characterId);
 };

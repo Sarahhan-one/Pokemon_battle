@@ -94,3 +94,12 @@ void Wrapper::CallManagedShowAvailableCards(const vector<string>& availableCardN
 
     availableCardsCallback(managedAvailableCardList);
 }
+
+void Wrapper::SelectCharacter(int characterId) {
+    // Call the GameManager to select character programmatically
+    gameManager->SelectCharacterProgrammatically(characterId);
+}
+
+void Wrapper::ExitGame() {
+    gameManager->exitGame();
+}
