@@ -51,83 +51,58 @@
 
         <!-- Game Panel -->
         <Grid x:Name="GamePanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Player Information Panel -->
-            <Grid Grid.Row="0" Background="#F0F0F0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Player HP -->
-                <StackPanel Grid.Column="0" Margin="10" Orientation="Vertical">
-                    <TextBlock Text="Player" FontSize="18" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <TextBlock Text="HP:" VerticalAlignment="Center"/>
-                        <ProgressBar x:Name="playerHpBar" Width="200" Height="20" Margin="5,0,5,0" Maximum="100" Value="100"/>
-                        <TextBlock x:Name="playerHpText" Text="100 / 100" VerticalAlignment="Center"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" /> <!-- Width for card selection -->
+            </Grid.ColumnDefinitions>
+            
+            <!-- Left side: Battle area -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <!-- HP Bars at the top -->
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="10,5">
+                            <TextBlock Text="Player" FontWeight="Bold" />
+                            <ProgressBar x:Name="playerHpBar" Width="200" Height="20" />
+                            <TextBlock x:Name="playerHpText" Text="100/100" />
+                        </StackPanel>
+                        
+                        <StackPanel Margin="10,5">
+                            <TextBlock Text="Computer" FontWeight="Bold" />
+                            <ProgressBar x:Name="computerHpBar" Width="200" Height="20" />
+                            <TextBlock x:Name="computerHpText" Text="100/100" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-
-                <!-- Computer HP -->
-                <StackPanel Grid.Column="1" Margin="10" Orientation="Vertical">
-                    <TextBlock Text="Computer" FontSize="18" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <TextBlock Text="HP:" VerticalAlignment="Center"/>
-                        <ProgressBar x:Name="computerHpBar" Width="200" Height="20" Margin="5,0,5,0" Maximum="100" Value="100"/>
-                        <TextBlock x:Name="computerHpText" Text="100 / 100" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <!-- Game Board Grid -->
-            <Grid x:Name="ImageGrid" Grid.Row="1" Margin="10">
-                <!-- Game images are added here dynamically -->
-            </Grid>
-        </Grid>
-
-        <!-- Available Cards Panel - This overlay shows on top of the game when cards need to be selected -->
-        <Grid x:Name="AvailableCardsPanel" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed" Background="#BBFFFFFF">
-            <Border Background="White" BorderBrush="Gray" BorderThickness="2" CornerRadius="5" 
-                    Width="500" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    
-                    <!-- Header -->
-                    <TextBlock Grid.Row="0" Text="Select 3 Cards" FontSize="24" FontWeight="Bold" 
-                               HorizontalAlignment="Center" Margin="0,15,0,5"/>
-                    
-                    <!-- Card List -->
-                    <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl x:Name="availableCardsList">
-                            <!-- Card items are added here dynamically -->
-                        </ItemsControl>
-                    </ScrollViewer>
-                    
-                    <!-- Confirm Button -->
-                    <Button x:Name="confirmCardSelection" Grid.Row="2"
-                            Content="Confirm Selection" 
-                            Click="ConfirmCardSelection_Click"
-                            Visibility="Visible"
-                            IsEnabled="False"
-                            Width="200" 
-                            Height="40"
-                            Background="#4CAF50"
-                            Foreground="White"
-                            FontWeight="Bold"
-                            Margin="0,10,0,20"
-                            HorizontalAlignment="Center"/>
                 </Grid>
-            </Border>
+                
+                <!-- Battle grid -->
+                <Grid x:Name="ImageGrid" Grid.Row="1" />
+            </Grid>
+            
+            <!-- Right side: Card selection -->
+            <Grid x:Name="AvailableCardsPanel" Grid.Column="1" Visibility="Collapsed" Background="#F5F5F5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Select 3 Cards" FontSize="18" FontWeight="Bold" 
+                           Margin="10,5" HorizontalAlignment="Center" />
+                
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ListBox x:Name="availableCardsList" Margin="5" 
+                             BorderThickness="0" Background="Transparent" />
+                </ScrollViewer>
+                
+                <Button x:Name="confirmCardSelection" Grid.Row="2" Content="Confirm Selection"
+                        Margin="10" Padding="10,5" IsEnabled="False" Click="ConfirmCardSelection_Click" />
+            </Grid>
         </Grid>
     </Grid>
 </Window>

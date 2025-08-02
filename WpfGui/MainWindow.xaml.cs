@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace Demon_battle
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         Wrapper game;
@@ -104,7 +101,6 @@ namespace Demon_battle
 
         public static void ShowImages(List<List<string>> paths, int playerCurrentHp, int playerMaxHp, int computerCurrentHp, int computerMaxHp, string sound_path)
         {
-            // 스레드 충돌 나서 추가한 부분
             Application.Current.Dispatcher.Invoke(() =>
             {
                 string a = "../../../../Sound/background.wav";
@@ -212,7 +208,7 @@ namespace Demon_battle
             });
         }
         
-        public static void ShowAvailableCards(List<string> availableCardNames)
+        public static void ShowAvailableCards(List<string> availableCardNames, List<string> cardImagePaths)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -224,15 +220,46 @@ namespace Demon_battle
                 // Clear previous selections
                 window.selectedCardIndices.Clear();
                 
-                // Display available cards with selection buttons
+                // Display available cards with selection buttons and images
                 window.availableCardsList.Items.Clear();
                 for (int i = 0; i < availableCardNames.Count; i++)
                 {
                     var cardPanel = new StackPanel { Orientation = Orientation.Horizontal };
-                    var cardName = new TextBlock { Text = availableCardNames[i], Margin = new Thickness(5), Width = 200 };
+                    
+                    // Add card image
+                    var cardImage = new Image { Width = 60, Height = 60, Margin = new Thickness(5) };
+                    try {
+                        string fullPath = System.IO.Path.GetFullPath(cardImagePaths[i]);
+                        if (File.Exists(fullPath))
+                        {
+                            var bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+                            bitmap.DecodePixelWidth = 60;
+                            bitmap.EndInit();
+                            cardImage.Source = bitmap;
+                        }
+                        else
+                        {
+                            Debug.WriteLine($"[ERROR] Card image not found: {cardImagePaths[i]}");
+                        }
+                    }
+                    catch (Exception ex) {
+                        Debug.WriteLine($"[ERROR] Loading card image: {ex.Message}");
+                    }
+                    
+                    var cardName = new TextBlock { 
+                        Text = availableCardNames[i], 
+                        Margin = new Thickness(5), 
+                        Width = 150,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+                    
                     var selectButton = new Button { Content = "Select", Tag = i };
                     selectButton.Click += window.CardSelect_Click;
                     
+                    cardPanel.Children.Add(cardImage);
                     cardPanel.Children.Add(cardName);
                     cardPanel.Children.Add(selectButton);
                     
@@ -241,6 +268,7 @@ namespace Demon_battle
                 
                 // Show confirmation button
                 window.confirmCardSelection.Visibility = Visibility.Visible;
+                window.confirmCardSelection.IsEnabled = false;
             });
         }
 
