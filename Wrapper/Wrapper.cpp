@@ -32,9 +32,11 @@ void CallDrawWpfMapFromNative(
         computerMaxHp, 
         managedSoundPath);
 }
-void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames)
+void CallShowAvailableCardsFromNative(
+    const std::vector<std::string>& availableCardNames,
+    const std::vector<std::string>& cardImagePaths)
 {
-    CppCliWrapper::Wrapper::CallManagedShowAvailableCards(availableCardNames);
+    CppCliWrapper::Wrapper::CallManagedShowAvailableCards(availableCardNames, cardImagePaths);
 }
 
 // Added function to receive card selections from native code
@@ -84,7 +86,6 @@ void CppCliWrapper::Wrapper::RegisterCardSelectionCallback(CardSelectionCallback
     cardSelectionCallback = cb;
 }
 
-// Add a method to submit card selections from C# to C++
 void CppCliWrapper::Wrapper::SubmitCardSelections(List<int>^ selectedCards)
 {
     std::unique_lock<std::mutex> lock(cardSelectionMutex);
@@ -129,15 +130,24 @@ void CppCliWrapper::Wrapper::CallManagedShowImages(
         computerMaxHp,
         sound_path);
 }
-void Wrapper::CallManagedShowAvailableCards(const vector<string>& availableCardNames) {
+void Wrapper::CallManagedShowAvailableCards(
+    const vector<string>& availableCardNames,
+    const vector<string>& cardImagePaths) 
+{
     if (availableCardsCallback == nullptr) return;
 
     auto managedAvailableCardList = gcnew List<String^>();
+    auto managedCardImagePaths = gcnew List<String^>();
+    
     for (const auto& s : availableCardNames) {
         managedAvailableCardList->Add(gcnew String(s.c_str()));
     }
+    
+    for (const auto& path : cardImagePaths) {
+        managedCardImagePaths->Add(gcnew String(path.c_str()));
+    }
 
-    availableCardsCallback(managedAvailableCardList);
+    availableCardsCallback(managedAvailableCardList, managedCardImagePaths);
 }
 
 void Wrapper::SelectCharacter(int characterId) {

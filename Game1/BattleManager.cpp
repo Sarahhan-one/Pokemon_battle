@@ -7,6 +7,10 @@ extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>
 	int computerMaxHp,
 	std::string sound_path);
 
+extern void CallShowAvailableCardsFromNative(
+    const std::vector<std::string>& availableCardNames,
+    const std::vector<std::string>& cardImagePaths);
+
 void BattleManager::init()
 {
 	resetMap();
@@ -63,14 +67,19 @@ void BattleManager::executeBattle()
 
 void BattleManager::selectCardsForStage()
 {
-	//Collect all available cards
+	// Collect all available cards
 	const auto& allHumanCards = humanPlayer_->getPokemon().getCards();
 	std::vector<std::string> allAvailableCardNames;
+	std::vector<std::string> allCardImagePaths;  //image paths
+	
 	for (const auto& card : allHumanCards) {
 		allAvailableCardNames.push_back(card.getName());
+		// Create path to card image using the same pattern as your other images
+		allCardImagePaths.push_back("../../../../Image/" + card.getName() + ".png");
 	}
 
-	CallShowAvailableCardsFromNative(allAvailableCardNames);
+	// Pass both names and image paths to UI
+	CallShowAvailableCardsFromNative(allAvailableCardNames, allCardImagePaths);
 	humanCardList_ = humanPlayer_->selectCardsForStage();
 	computerCardList = computerPlayer_->selectCardsForStage();
 }

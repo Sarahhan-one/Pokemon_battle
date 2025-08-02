@@ -65,7 +65,7 @@ void GameManager::update()
         }
         else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
             stageNumber_++; // Advance to next stage
-            if (stageNumber_ > 3) { // FINAL WIN
+            if (stageNumber_ > 2) { // FINAL WIN
                 std::cout << "You Won all the stages!!! Congrats!!! \n";
                 Sleep(2000);
                 gameState_ = GameState::MENU;
@@ -90,6 +90,8 @@ void GameManager::update()
 
                 battleManager_.init();
                 gameState_ = GameState::BATTLE;
+                
+                //battleManager_.executeBattle();
             }
         }
         break;
@@ -154,7 +156,7 @@ Pokemon* GameManager::createOpponentForStage(int stage) {
     case 2:
         return new Ttodogas(OpponentStPos);
     default:
-        return nullptr;
+        return new Naong(OpponentStPos); // Fallback to ensure there's always an opponent
     }
 }
 

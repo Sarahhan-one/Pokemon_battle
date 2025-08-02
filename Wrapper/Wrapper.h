@@ -21,7 +21,9 @@ namespace CppCliWrapper {
         int computerCurrentHp, 
         int computerMaxHp,
         String^ sound_path);
-    public delegate void ShowAvailableCardsCallback(List<String^>^ availableCardNames);
+    public delegate void ShowAvailableCardsCallback(
+        List<String^>^ availableCardNames,
+        List<String^>^ cardImagePaths);
     public delegate void CardSelectionCallback(); // New delegate for card selection
 
     public ref class Wrapper
@@ -52,7 +54,7 @@ namespace CppCliWrapper {
             int computerCurrentHp,
             int computerMaxHp,
             String^ sound_path);
-        static void CallManagedShowAvailableCards(const vector<string>& availableCardNames);
+        static void CallManagedShowAvailableCards(const vector<string>& availableCardNames, const vector<string>& cardImagePaths);
         
         static void SubmitCardSelections(List<int>^ selectedCards); 
     };

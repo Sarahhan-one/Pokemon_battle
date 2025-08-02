@@ -7,7 +7,7 @@ extern void CallDrawWpfMapFromNative(
 	const std::vector<std::vector<std::string>>& paths,
 	int playerCurrentHp, int playerMaxHp,
 	int computerCurrentHp, int computerMaxHp, string sound_path);
-extern void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames);
+extern void CallShowAvailableCardsFromNative(const std::vector<std::string>& availableCardNames, const std::vector<std::string>& allCardImagePaths);
 
 enum class BattleResult { NONE, PLAYER_WIN, COMPUTER_WIN };
 
@@ -18,7 +18,6 @@ enum class ImageName {
 class BattleManager
 {
 private:
-	// ~_ 구조가 google, tensorflow 등의 modern c++ style 이라고 해서 사용해봤습니다.
 	Player* humanPlayer_;
 	Player* computerPlayer_;
 	vector<vector<Pokemon*>> map_;
