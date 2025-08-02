@@ -17,10 +17,10 @@ void GameManager::init()
 
 void GameManager::menu()
 {
-    std::cout << "===== 게임 메뉴 =====\n";
-    std::cout << "1. 전투 시작\n";
-    std::cout << "2. 게임 종료\n";
-    std::cout << "번호를 선택하세요: ";
+    std::cout << "===== Game Menu =====\n";
+    std::cout << "1. Battle Starts\n";
+    std::cout << "2. End the Game\n";
+    std::cout << "Select the number: ";
 
     int input = 0;
     std::cin >> input;
@@ -36,7 +36,7 @@ void GameManager::menu()
         gameState_ = GameState::EXIT;
         break;
     default:
-        std::cout << "잘못된 입력입니다.\n";
+        std::cout << "Not a valid input.\n";
         break;
     }
 }
@@ -55,7 +55,7 @@ void GameManager::update()
         break;
 
     case GameState::BATTLE:
-        std::cout << "전투 시작!!\n";
+        std::cout << "Battle Starts!!\n";
         Sleep(1000);
         battleManager_.executeBattle();
         if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
@@ -95,7 +95,7 @@ void GameManager::update()
         break;
 
     case GameState::EXIT:
-        std::cout << "게임을 종료합니다.\n";
+        std::cout << "End the Game.\n";
         Sleep(2000);
         exit(0);
         break;
@@ -111,7 +111,7 @@ void GameManager::selectCharacter()
     while (choice > 2) {
 
         system("cls");
-        cout << "캐릭터를 선택하세요.\n";
+        cout << "Select you character.\n";
         cout << "\
 0. Pikachu\n\
 1. Kkobugi\n\
@@ -132,7 +132,7 @@ void GameManager::selectCharacter()
             break;
         default:
             system("cls");
-            cout << "유효하지 않은 입력 입니다.\n";
+            cout << "Not a valid input.\n";
             Sleep(2000);
             break;
         }

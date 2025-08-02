@@ -9,7 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Kkobugi.png" />
+    <None Remove="Pairi.png" />
+    <None Remove="Pikachu.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Wrapper\Wrapper.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Kkobugi.png" />
+    <Resource Include="Pairi.png" />
+    <Resource Include="Pikachu.png" />
   </ItemGroup>
 
 </Project>

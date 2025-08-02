@@ -1,7 +1,5 @@
 #include "BattleManager.h"
 
-#define _CONSOLE 1
-
 extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>& paths,
 	int playerCurrentHp,
 	int playerMaxHp,
@@ -11,6 +9,8 @@ extern void CallDrawWpfMapFromNative(const std::vector<std::vector<std::string>>
 
 void BattleManager::init()
 {
+	resetMap();
+
 	isBattleEnd_ = false;
 	currentTurn_ = 0;
 
@@ -19,14 +19,6 @@ void BattleManager::init()
 
 	map_[playerPos.y][playerPos.x] = &humanPlayer_->getPokemon();
 	map_[compPos.y][compPos.x] = &computerPlayer_->getPokemon();
-
-	//imageHash_[ImageName::BLANK] = "";
-	//imageHash_[ImageName::PIKA] = "pika.png";
-	//imageHash_[ImageName::PAI] = "pai.png";
-	//imageHash_[ImageName::KKO] = "kko.png";
-	//imageHash_[ImageName::NAO] = "nao.png";
-	//imageHash_[ImageName::MAJ] = "maj.png";
-	//imageHash_[ImageName::TTO] = "tto.png";
 }
 
 void BattleManager::executeBattle()
@@ -39,7 +31,6 @@ void BattleManager::executeBattle()
 		selectCardsForStage();
 		vector<Position> tmpPos;
 
-#if _CONSOLE
 		for (int i = 0; i < 3; i++) {
 			// Player's turn
 			tmpPos = humanPlayer_->executeCard(map_, humanCardList_[i]);
@@ -47,6 +38,7 @@ void BattleManager::executeBattle()
 			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Player");
 			if (!computerPlayer_->getPokemon().isAlive()) {
 				lastResult_ = BattleResult::PLAYER_WIN;
+				resetMap();
 				system("cls");
 				Sleep(2000);
 				return; // End battle, GameManager handle next stage
@@ -59,38 +51,13 @@ void BattleManager::executeBattle()
 			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Computer");
 			if (!humanPlayer_->getPokemon().isAlive()) {
 				lastResult_ = BattleResult::COMPUTER_WIN;
+				resetMap();
 				system("cls");
 				Sleep(2000);
 				return;
 			}
 			humanPlayer_->getPokemon().setShield(false);
 		}
-#else
-		for (int i = 0; i < 3; i++) {
-			// Player's turn
-			tmpPos = humanPlayer_->executeCard(map_, humanCardList_[i]);
-			Card tmp = humanPlayer_->getPokemon().getCards()[humanCardList_[i]];
-			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Player");
-			if (!computerPlayer_->getPokemon().isAlive()) {
-				lastResult_ = BattleResult::PLAYER_WIN;
-				system("cls");
-				Sleep(2000);
-				return; // End battle, GameManager handle next stage
-			}
-
-			// Computer's turn
-			tmpPos = computerPlayer_->executeCard(map_, computerCardList[i]);
-			tmp = computerPlayer_->getPokemon().getCards()[computerCardList[i]];
-			showEffect(tmpPos, tmp.getType(), tmp.getName(), "Computer");
-			if (!humanPlayer_->getPokemon().isAlive()) {
-				lastResult_ = BattleResult::COMPUTER_WIN;
-				system("cls");
-				Sleep(2000);
-				return;
-			}
-		}
-#endif
-
 	}
 }
 
@@ -151,11 +118,6 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 		break;
 	}
 
-	// 원하시는 대로 지우셔도댐
-	if (poss.size() == 0) {
-		return;
-	}
-
 	Position playerPos = humanPlayer_->getPokemon().getPos();
 	Position compPos = computerPlayer_->getPokemon().getPos();
 
@@ -178,7 +140,6 @@ void BattleManager::showEffect(vector<Position> poss, CardType cardType, string 
 				curOutBlank = curOut;
 			}
 
-			// 중복 할당이지만 성능 및 구현 상 문제 없음
 			for (Position pos : poss) {
 				if (pos.y == y && pos.x == x) {
 					cout << effect;
@@ -291,11 +252,7 @@ void BattleManager::drawWpfMap(vector<vector<char>> effectMap, CardType cardType
 						paths[y][x] = "../../../../Image/" + seat + ".png";
 					
 				}
-				//string className = typeid(*map_[y][x]).name();
-				//paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
 			}
-
-			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}
 	}
 	int playerHp = humanPlayer_->getPokemon().getHp();
@@ -375,4 +332,15 @@ void BattleManager::printMap()
 		}
 		cout << '\n';
 	}
+}
+
+void BattleManager::resetMap() {
+	for (int y = 0; y < MAX_Y; y++) {
+		for (int x = 0; x < MAX_X; x++) {
+			map_[y][x] = nullptr;
+		}
+	}
+
+	// reset player positions 
+
 }

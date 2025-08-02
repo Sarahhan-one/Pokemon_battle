@@ -45,8 +45,8 @@ public:
 
 	// move, attack µÓ¿« effect ∏¶ print
 	void showEffect(vector<Position> poss, CardType cardType, string effectName, string userName);
-	void showWpfEffect();
 
+	void resetMap();
 	void printMap();
 	void printMap(vector<vector<char>> effectMap);
 
