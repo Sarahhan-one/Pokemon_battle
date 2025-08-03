@@ -68,8 +68,13 @@ namespace Demon_battle
 
         private void MenuExitGame_Click(object sender, RoutedEventArgs e)
         {
-            game.ExitGame(); // Add this method to your wrapper
-            Application.Current.Shutdown();
+            // Hide game panels
+            GamePanel.Visibility = Visibility.Collapsed;
+            AvailableCardsPanel.Visibility = Visibility.Collapsed;
+            CharacterSelectionPanel.Visibility = Visibility.Collapsed;
+
+            // Show main menu
+            MenuPanel.Visibility = Visibility.Visible;
         }
 
         private void SelectPikachu_Click(object sender, RoutedEventArgs e)
@@ -95,7 +100,7 @@ namespace Demon_battle
             Task.Run(() =>
             {
                 game.SelectCharacter(characterId);
-                game.StartGame(); // This will now start with the selected character
+                game.StartGame(); 
             });
         }
 

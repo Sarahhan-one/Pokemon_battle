@@ -103,6 +103,20 @@
                 <Button x:Name="confirmCardSelection" Grid.Row="2" Content="Confirm Selection"
                         Margin="10" Padding="10,5" IsEnabled="False" Click="ConfirmCardSelection_Click" />
             </Grid>
+
+            <!-- Exit Game Button -->
+            <Button 
+                x:Name="ExitGameButton" 
+                Content="Exit Game" 
+                Width="100" 
+                Height="30" 
+                Click="MenuExitGame_Click"
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right" 
+                Margin="0,10,10,0"
+                Background="Red"
+                Foreground="White"
+                FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

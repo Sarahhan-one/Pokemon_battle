@@ -54,8 +54,6 @@ std::vector<int> WaitForCardSelections(int numCards)
     return result;
 }
 
-// ShowImagesCallback^ Wrapper::imageCallback = nullptr;
-
 CppCliWrapper::Wrapper::Wrapper() {
 	gameManager = new GameManager();
 }
@@ -155,6 +153,3 @@ void Wrapper::SelectCharacter(int characterId) {
     gameManager->update();
 }
 
-void Wrapper::ExitGame() {
-    gameManager->exitGame();
-}

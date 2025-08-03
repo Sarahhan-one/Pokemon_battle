@@ -65,7 +65,7 @@ void GameManager::update()
         }
         else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
             stageNumber_++; // Advance to next stage
-            if (stageNumber_ > 2) { // FINAL WIN
+            if (stageNumber_ == 3) { // FINAL WIN
                 std::cout << "You Won all the stages!!! Congrats!!! \n";
                 Sleep(2000);
                 gameState_ = GameState::MENU;
@@ -80,9 +80,9 @@ void GameManager::update()
                 Pokemon& playerPokemon = battleManager_.getHumanPlayer()->getPokemon();
                 playerPokemon.setPos(Position(1, 0));
 
-                while (playerPokemon.getHp() < playerPokemon.getMaxHp()) {
-                    playerPokemon.takeDamage(-1); // Heal by 1 until full
-                }
+                //while (playerPokemon.getHp() < playerPokemon.getMaxHp()) {
+                //    playerPokemon.takeDamage(-1); // Heal by 1 until full
+                //}
 
                 Pokemon* nextOpponent = createOpponentForStage(stageNumber_);
                 nextOpponent->setPos(Position(1, 3));
@@ -90,8 +90,7 @@ void GameManager::update()
 
                 battleManager_.init();
                 gameState_ = GameState::BATTLE;
-                
-                //battleManager_.executeBattle();
+                return;
             }
         }
         break;
@@ -169,7 +168,6 @@ void GameManager::main()
 
     while (true) {
         gameManager.update();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 
@@ -207,38 +205,47 @@ void GameManager::SelectCharacterProgrammatically(int characterId)
     // Set up for battle
     gameState_ = GameState::BATTLE;
     startBattle();
-    
-    // Execute the battle directly without waiting for further console input
-    battleManager_.executeBattle();
-    
-    // After battle ends, check the result just like in update()
-    if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
-        gameState_ = GameState::MENU;
-    }
-    else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
-        stageNumber_++; // Advance to next stage
-        if (stageNumber_ > 3) { // FINAL WIN
+
+    // This loop will continue until all stages are complete or player loses
+    while (gameState_ == GameState::BATTLE) {
+        // Execute battle for current stage
+        battleManager_.executeBattle();
+
+        // Process battle results
+        if (battleManager_.getLastResult() == BattleResult::COMPUTER_WIN) {
+            std::cout << "Game Over! You lost.\n";
+            Sleep(2000);
             gameState_ = GameState::MENU;
+            break; // Exit the loop to return to menu
         }
-        else { // WIN PER STAGE
-            // Restore HP and reset map for next stage
-            // Player's Pokemon stays, only opponent changes
-            Pokemon& playerPokemon = battleManager_.getHumanPlayer()->getPokemon();
-            playerPokemon.setPos(Position(1, 0));
-
-            while (playerPokemon.getHp() < playerPokemon.getMaxHp()) {
-                playerPokemon.takeDamage(-1); // Heal by 1 until full
+        else if (battleManager_.getLastResult() == BattleResult::PLAYER_WIN) {
+            stageNumber_++; // Advance to next stage
+            if (stageNumber_ > 2) { // FINAL WIN
+                std::cout << "You Won all the stages!!! Congrats!!! \n";
+                Sleep(2000);
+                gameState_ = GameState::MENU;
+                break; // Exit the loop to return to menu
             }
+            else { // WIN PER STAGE
+                std::cout << "You Won! Proceeding to next stage... \n";
+                Sleep(2000);
 
-            Pokemon* nextOpponent = createOpponentForStage(stageNumber_);
-            nextOpponent->setPos(Position(1, 3));
-            battleManager_.setComputerPokemon(nextOpponent);
+                // Prepare for next stage
+                Pokemon& playerPokemon = battleManager_.getHumanPlayer()->getPokemon();
+                playerPokemon.setPos(Position(1, 0));
 
-            battleManager_.init();
-            gameState_ = GameState::BATTLE;
-            
-            // Continue to next stage's battle
-            battleManager_.executeBattle();
+                Pokemon* nextOpponent = createOpponentForStage(stageNumber_);
+                nextOpponent->setPos(Position(1, 3));
+                battleManager_.setComputerPokemon(nextOpponent);
+
+                battleManager_.init();
+                // Continue to next iteration of the loop
+            }
         }
+    }
+    
+    // Reset stage number when returning to menu
+    if (gameState_ == GameState::MENU) {
+        stageNumber_ = 1;
     }
 }
