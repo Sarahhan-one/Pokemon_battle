@@ -67,21 +67,21 @@ void BattleManager::executeBattle()
 
 void BattleManager::selectCardsForStage()
 {
-	// Collect all available cards
-	const auto& allHumanCards = humanPlayer_->getPokemon().getCards();
-	std::vector<std::string> allAvailableCardNames;
-	std::vector<std::string> allCardImagePaths;  //image paths
-	
-	for (const auto& card : allHumanCards) {
-		allAvailableCardNames.push_back(card.getName());
-		// Create path to card image using the same pattern as your other images
-		allCardImagePaths.push_back("../../../../Image/" + card.getName() + ".png");
-	}
+    // Collect all available cards
+    const auto& allHumanCards = humanPlayer_->getPokemon().getCards();
+    std::vector<std::string> allAvailableCardNames;
+    std::vector<std::string> allCardImagePaths;  //image paths
+    
+    for (const auto& card : allHumanCards) {
+        allAvailableCardNames.push_back(card.getName());
+        // Create path to card image using the same pattern as your other images
+        allCardImagePaths.push_back("../../../../Image/" + card.getName() + ".png");
+    }
 
-	// Pass both names and image paths to UI
-	CallShowAvailableCardsFromNative(allAvailableCardNames, allCardImagePaths);
-	humanCardList_ = humanPlayer_->selectCardsForStage();
-	computerCardList = computerPlayer_->selectCardsForStage();
+    // Pass both names and image paths to UI
+    CallShowAvailableCardsFromNative(allAvailableCardNames, allCardImagePaths);
+    humanCardList_ = humanPlayer_->selectCardsForStage();
+    computerCardList = computerPlayer_->selectCardsForStage();
 }
 
 bool BattleManager::getIsBattleEnd()
@@ -288,13 +288,8 @@ void BattleManager::drawWpfMap()
 				paths[y][x] = "";
 				continue;
 			}
-			else {
-
-			}
 			
 			string className = typeid(*map_[y][x]).name();
-			
-
 			paths[y][x] = "../../../../Image/" + className.substr(6) + ".png";
 			//cout <<"y: " << y << " x: " << x << " path: " << paths[y][x] << endl;
 		}

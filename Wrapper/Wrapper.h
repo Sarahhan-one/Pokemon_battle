@@ -41,7 +41,6 @@ namespace CppCliWrapper {
         void StartGame();
         void EndGame();
         void SelectCharacter(int characterId);
-        void ExitGame();
         
         static void RegisterImageCallback(ShowImagesCallback^ cb);
         static void RegisterAvailableCardsCallback(ShowAvailableCardsCallback^ cb);
